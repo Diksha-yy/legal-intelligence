@@ -1,0 +1,48 @@
+Module_or_Stage,Endpoint,Method,HTTP_Status,Latency_ms,Success,Input_Size,Output_Summary,Key_Metric_Name,Key_Metric_Value
+Frontend: SPA Root,/,GET,200,2039.58,True,465 bytes,React SPA HTML root delivered,HTML_Delivered,1
+Frontend: JS Bundle,/assets/index-CC2ZfwOG.js,GET,200,17.7,True,578915 bytes,Vite Production JS Bundle (565.3 KB),Bundle_Size_KB,565.3
+Frontend: CSS Bundle,/assets/index-DcVJdF7X.css,GET,200,17.33,True,59673 bytes,Tailwind CSS Bundle (58.3 KB),CSS_Size_KB,58.3
+Frontend: Route /dashboard,/dashboard,GET,200,9.11,True,465 bytes,SPA Router Fallback OK,Route_Accessible,1
+Frontend: Route /upload,/upload,GET,200,4.53,True,465 bytes,SPA Router Fallback OK,Route_Accessible,1
+Frontend: Route /chat,/chat,GET,200,5.26,True,465 bytes,SPA Router Fallback OK,Route_Accessible,1
+Frontend: Route /compare,/compare,GET,200,5.72,True,465 bytes,SPA Router Fallback OK,Route_Accessible,1
+Frontend: Route /reports,/reports,GET,200,5.9,True,465 bytes,SPA Router Fallback OK,Route_Accessible,1
+Auth: Registration,/api/users/register,POST,200,39.21,True,User: researcher_1792577164@legalai.org,User created successfully,User_Registered,1
+Auth: Login,/api/auth/login,POST,200,9.88,True,Credentials for researcher_1792577164@legalai.org,JWT Token Issued (261 chars),JWT_Token_Length,261
+Auth: Protected Access,/api/documents,GET,200,14.76,True,Bearer Token Auth,"Access granted, 4 docs listed",Existing_Doc_Count,4
+Upload: Master Rental Agreement,/api/documents/upload,POST,200,38.05,True,9801 bytes,Uploaded Doc ID: 5,Uploaded_Doc_ID,5
+M1: OCR Start,/api/ocr/start/5,POST,200,129.12,True,Doc ID: 5,Status: COMPLETED,OCR_Init_Success,1
+M1: OCR Extraction,/api/ocr/5,GET,200,10.79,True,5272 chars,Extracted 850 words across 1 pages,Extracted_Word_Count,850
+M2: Classification,/api/clauses/classify/5,POST,200,2106.06,True,850 words,Detected 47 clauses (avg conf: 27.62%),Detected_Clause_Count,47
+M3: BART Summary,/api/summaries/generate/5,POST,200,38086.34,True,850 words,Summary: 69 words (-91.9%),Compression_Ratio_Pct,91.9
+M6: Risk Scoring,/api/risk-scores/analyze/5,POST,200,64.79,True,47 clauses,"Score: 60.0/100 (Moderate screening score), 6 findings",Risk_Score,60.0
+M7: Fairness Analysis,/api/fairness-scores/analyze/5,POST,200,14.03,True,47 clauses,Score: 78.0/100 (BALANCED),Fairness_Score,78.0
+M5: Missing Clauses,/api/missing-clauses/check,GET,200,36.53,True,DocType: rental,"Detected: 0, Potentially Missing: 8",Missing_Clauses_Count,8
+M8: RAG Query 1,/api/qa/5,POST,200,11486.7,True,What is the agreed rent and securit...,"Conf: 0.88 | Ans: [Chunk 3]
+for 11 months, from 1 May...",RAG_Confidence,0.88
+M8: RAG Query 2,/api/qa/5,POST,200,8391.41,True,What are the notice period and cond...,"Conf: 0.88 | Ans: [Chunk 5]
+inspect the Premises at a...",RAG_Confidence,0.88
+M8: RAG Query 3,/api/qa/5,POST,200,9957.75,True,"Who is responsible for repairs, mai...","Conf: 0.88 | Ans: [Chunk 4]
+3,500 a month. 4. The Ten...",RAG_Confidence,0.88
+M4: Translation (Hindi),/api/translation/generate/5,POST,200,61092.08,True,447 chars (summary),Hindi (469 chars): किराये का समझौता कानूनी सलाह न...,Translation_Len_HI,469
+M4: Translation (Marathi),/api/translation/generate/5,POST,200,46009.93,True,447 chars (summary),Marathi (476 chars): भाडे करार हा एक प्रारंभिक बिंद...,Translation_Len_MR,476
+Report: Plaintext Audit,/api/reports/download/5,GET,200,39.99,True,Doc ID: 5,"Report Generated (7667 chars, 171 lines)",Report_Char_Length,7667
+Upload: Lease Deed Agreement,/api/documents/upload,POST,200,48.9,True,17039 bytes,Uploaded Doc ID: 6,Uploaded_Doc_ID,6
+M1: OCR Start,/api/ocr/start/6,POST,200,206.81,True,Doc ID: 6,Status: COMPLETED,OCR_Init_Success,1
+M1: OCR Extraction,/api/ocr/6,GET,200,7.31,True,4546 chars,Extracted 712 words across 1 pages,Extracted_Word_Count,712
+M2: Classification,/api/clauses/classify/6,POST,200,1383.01,True,712 words,Detected 41 clauses (avg conf: 29.35%),Detected_Clause_Count,41
+M3: BART Summary,/api/summaries/generate/6,POST,200,48699.6,True,712 words,Summary: 90 words (-87.4%),Compression_Ratio_Pct,87.4
+M6: Risk Scoring,/api/risk-scores/analyze/6,POST,200,99.08,True,41 clauses,"Score: 60.0/100 (Moderate screening score), 7 findings",Risk_Score,60.0
+M7: Fairness Analysis,/api/fairness-scores/analyze/6,POST,200,16.54,True,41 clauses,Score: 78.0/100 (BALANCED),Fairness_Score,78.0
+M5: Missing Clauses,/api/missing-clauses/check,GET,200,28.84,True,DocType: rental,"Detected: 1, Potentially Missing: 7",Missing_Clauses_Count,7
+M8: RAG Query 1,/api/qa/6,POST,200,22873.4,True,What is the agreed rent and securit...,"Conf: 0.88 | Ans: [Chunk 3]
+year) or as per applicabi...",RAG_Confidence,0.88
+M8: RAG Query 2,/api/qa/6,POST,200,15702.42,True,What are the notice period and cond...,"Conf: 0.88 | Ans: [Chunk 3]
+year) or as per applicabi...",RAG_Confidence,0.88
+M8: RAG Query 3,/api/qa/6,POST,200,7503.59,True,"Who is responsible for repairs, mai...","Conf: 0.88 | Ans: [Chunk 4]
+the Lessee for the office...",RAG_Confidence,0.88
+M4: Translation (Hindi),/api/translation/generate/6,POST,200,48825.22,True,526 chars (summary),Hindi (470 chars): परिसर केवल कार्यालय प्रयोजनों ...,Translation_Len_HI,470
+M4: Translation (Marathi),/api/translation/generate/6,POST,200,42607.04,True,526 chars (summary),Marathi (422 chars): भाडेकरूला केवळ कार्यालयीन कारण...,Translation_Len_MR,422
+Report: Plaintext Audit,/api/reports/download/6,GET,200,86.19,True,Doc ID: 6,"Report Generated (6724 chars, 132 lines)",Report_Char_Length,6724
+M9: Document Comparison,/api/agreement-comparison,POST,200,498.39,True,Docs: 5 vs 6,"Compared 53 clauses | Matched: 0, Mod: 0, Add: 33, Rem: 20",Total_Compared_Clauses,53
+M9: Comparison History,/api/agreement-comparison/history/5,GET,200,17.39,True,Doc ID: 5,History verified (1 comparison records),Comparison_History_Count,1
