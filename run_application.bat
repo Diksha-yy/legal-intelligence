@@ -14,6 +14,10 @@ if not exist ".venv\Scripts\python.exe" (
 )
 
 echo.
+echo Clearing any previous process occupying port 8000...
+powershell -NoProfile -Command "Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }" >nul 2>&1
+
+echo.
 echo Starting unified server (FastAPI + React SPA Frontend)...
 echo Website URL: http://localhost:8000/
 echo Swagger API: http://localhost:8000/docs
