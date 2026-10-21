@@ -1,0 +1,121 @@
+CHUNK: RENT_001:p27:c1
+TEXT:
+2000 : Mah. XVIII] The Maharashtra Rent Control Act, 1999 23
+29. (1) No landlord, either himself or through any person  acting or
+purporting to act on his behalf, shall, without just or sufficient cause, cut-
+off or withhold any essential supply or service enjoyed by the tenant in
+respect of the premises let to him.
+(2) A tenant in occupation of the premises may, if the landlord has
+contravened the provisions of sub-section ( 1), make an application to the
+court for a direction to restore such supply or service.
+(3) Having regard to the circumstances of a particular case the court
+may, if it is satisfied that it is necessary to make an interim order, make
+such order directing the landlord to restore the essential supply or service
+before the date specified in such order, before giving notice to the landlord
+of the enquiry to be made in the application under sub-section ( 3) or during
+the pendency of such enquiry. On the failure of the landlord to comply with
+such interim order of the court, the landlord shall be liable to the same
+penalty as is provided for in sub-section ( 4).
+(4)
+
+CHUNK: RENT_001:p34:c1
+TEXT:
+30 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+55. (1) Notwithstanding anything contained in this Act or any other
+law for the time being in force, any agreement for leave and licence or
+letting of any premises, entered into between the landlord and the tenant
+or the licensee, as the case may be, after the commencement of this Act,
+shall be in writing and shall be registered under the Registration Act,
+1908.
+(2) The responsibility of getting such agreement registered shall be on
+the landlord and in the absence of the written registered agreement, the
+contention of the tenant about the terms and conditions , subject to which
+a premises have been given to him by the landlord on leave and licence or
+have been let to him, shall prevail, unless proved otherwise.
+(3) Any landlord who contravenes the provisions of this section shall,
+on conviction, be punished with imprisonment which may extend to three
+months or with fine not exceeding rupees five thousand or with both.
+56. Notwithstanding anything contained in this Act, it shall be lawful for,—
+(i) the tenant or any person
+
+CHUNK: DIV_003:p5:c2
+TEXT:
+oceedings .—Where a Family Court has been 
+established for any area,— 
+(a) no district court or any subordinate civil court referred to in sub -section (1) of section 7 shall, 
+in relation to such area, have or exercise any jurisdiction in respect of any suit or proceeding of the 
+nature referred to in the Explanation to that sub-section; 
+(b) no magistrate shall, in relation to such area, have or exercise any jurisdiction or power s under 
+Chapter IX of the Code of Criminal Procedure, 1973 (2 of 1974); 
+(c) every suit or proceeding of the nature referred to in the Explanation to sub -section ( 1) of 
+section 7 and every proceeding under Chapter IX of the Code of Crimina l Procedure, 1973 ( 2 of 
+1974),— 
+(i) which is pending immediately before the establishment of such Family Court before any 
+district court or subordinate court referred to in that sub-section or, as the case may be, before any 
+magistrate under the said Code; and 
+(ii) which wou ld have been required to be instituted or taken before such Family Court if, 
+before the date on which such suit or proceeding was
+
+CHUNK: PROP_001:p18:c4
+TEXT:
+all be entitled to receive appropriate compensation in the manner as provided under this Act. 
+15. Obligations of promoter in case of transfer of a real e state project to a third party.—(1) The 
+promoter shall not transfer or assign his majority rights and liabilities in respect of a real estate project to 
+a third party without obtaining prior written consent from two -third allottees, except the promoter, and 
+without the prior written approval of the Authority: 
+Provided that such transfer or assignment shall not affect the allotment or sale of the apartments, plots 
+or buildings as the case may be, in the real estate project made by the erstwhile promoter. 
+Explanation.—For the purpose of this sub -section, the allottee, irrespective of the number of 
+apartments or plots, as the case may be, booked by him or booked in the name of his family, or in the case 
+of other persons such as companies or firms or any association of individuals, by whatever name called, 
+booked in its name or booked in the name of its associated entities or related enterprises, shall be 
+considered as one
+
+CHUNK: PROP_004:p3:c4
+TEXT:
+apartment in
+a building and to make such apartment heritable and transferable property, and to provide
+for matters connected with the purposes aforesaid ; It is hereby enacted in the Twenty-
+first Year of the Republic of India as follows :—
+1. (1) This Act may be called the Maharashtra Apartment Ownership Act, 1970.
+(2) It extends to the whole of the State of Maharashtra.
+(3) This section shall come into force at once; and the remaining provisions of this
+Act shall come into force in such areas, and on such dates 2 as the State Government may,
+by notification in the Official Gazette, appoint ; and different dates may be appointed for
+different areas.
+2. This Act applies only to property , the sole owner or all of the owners of which
+submit the same to the provisions of this Act by duly executing and registering a
+Declaration as hereinafter provided :
+Provided that, no property shall be submitted to the provisions of this Act, 3[unless
+it is used or proposed to be used for residence, office, practice of any profession or for
+carrying on any occupation, trade or business or for any
+
+CHUNK: EMP_001:p31:c4
+TEXT:
+may extend the coverage of such provisions to the Government 
+establishments also;  
+ (f) it provides that the wages to employees may also be paid by cheque or through digital or 
+electronic mode or by crediting it in the bank account of the employee. However, the appropriate 
+Government may specify the industrial or other establishment, where the wages are to be paid only by 
+cheque or through digital or electronic mode or by crediting the wages in the bank account of the 
+employee; 
+IndiaCode
+
+CHUNK: EMP_004:p27:c1
+TEXT:
+27 
+ 
+18. Occupational safety and health standards .—(1) The Central Government shall declare, by 
+notification, standards on occupational safety and health for workplaces relating to factory, mine, dock 
+work, beedi and cigar, building and other construction work and other establishments. 
+(2) In particular and without prejudice to the generality of the power to declare standards to be 
+followed under sub-section (1), such standards shall relate to— 
+(a) physical, chemical, biological and any other hazards to be dealt with for the working life of 
+employee to ensure to the extent feasible on the basis of the best available evidence or functional 
+capacity, that no employee will suffer material impairment of health or functional capacity even if 
+such employee has regular exposure to such hazards; 
+(b) the norms— 
+(i) appraising the hazards to employees and users to whom such hazards are exposed;  
+(ii) relating to relevant symptoms and appropriate energy treatment and proper conditions and 
+precautions of safe use or exposure;  
+(iii) for monitoring and measuring exposure of

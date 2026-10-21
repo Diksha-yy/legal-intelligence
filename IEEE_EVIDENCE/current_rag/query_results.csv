@@ -1,0 +1,9 @@
+﻿question_id,domain,question,latency_ms,top1_domain,reviewed_gold,recall_at_1,recall_at_3,recall_at_5,reciprocal_rank
+1,rental,What are tenant rights concerning essential services under Maharashtra rental law?,43.17,rental,True,0,0,1,0.2
+2,rental,Is registration required for a leave and licence agreement in Maharashtra?,27.2,property,True,0,1,1,0.5
+3,employment,What legal provisions govern payment of wages to employees?,25.71,employment,True,0,0,0,0.0
+4,employment,What rules relate to occupational safety and working conditions?,28.62,employment,True,1,1,1,1.0
+5,property,What duties does a promoter have under the Real Estate Regulation Act?,29.93,property,True,0,0,0,0.0
+6,property,What are the rules governing apartment ownership in Maharashtra?,22.17,property,False,,,,
+7,divorce,What are grounds for divorce under the Hindu Marriage Act?,23.56,divorce,True,0,0,0,0.0
+8,divorce,What is the jurisdiction of family courts in matrimonial matters?,26.98,divorce,True,0,0,0,0.0

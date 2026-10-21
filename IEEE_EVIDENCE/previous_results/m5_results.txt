@@ -1,0 +1,17 @@
+M5 Missing Clause Detection Evaluation
+=============================================
+Document Type: employment
+Total Expected Clauses: 8
+Total Detected Clauses: 6
+Total Potentially Missing: 2
+True Positives: 2
+False Positives: 0
+False Negatives: 0
+Precision: 1.0000
+Recall: 1.0000
+F1-Score: 1.0000
+Execution Time: 0.0016 seconds
+
+Predicted Missing Clauses:
+- Termination and Notice
+- Confidentiality

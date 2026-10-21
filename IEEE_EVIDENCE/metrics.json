@@ -1,0 +1,89 @@
+{
+  "evaluation_timestamp": "2026-10-21T08:40:00Z",
+  "hardware_environment": {
+    "device": "cpu",
+    "python_version": "3.11.9",
+    "faiss_version": "1.15.1",
+    "torch_version": "2.14.0"
+  },
+  "modules": {
+    "m1_ocr": {
+      "cer": 0.0,
+      "wer": 0.0,
+      "latency_seconds_per_page": 0.0666,
+      "engine": "PyMuPDF / Tesseract"
+    },
+    "m2_clause_classification": {
+      "keyword": {
+        "accuracy": 0.825,
+        "macro_f1": 0.8405,
+        "latency_ms": 0.58
+      },
+      "semantic": {
+        "accuracy": 0.875,
+        "macro_f1": 0.8681,
+        "latency_ms": 371.67
+      },
+      "hybrid": {
+        "accuracy": 0.875,
+        "macro_f1": 0.8681,
+        "latency_ms": 15.76,
+        "speedup_vs_semantic": "23.6x"
+      }
+    },
+    "m3_summarization": {
+      "model": "facebook/bart-large-cnn",
+      "rouge1_f1": 0.6071,
+      "rouge2_f1": 0.4444,
+      "rougeL_f1": 0.5714,
+      "inference_time_seconds": 16.1404
+    },
+    "m4_translation": {
+      "model": "facebook/nllb-200-distilled-600M",
+      "hindi": {
+        "bleu": 8.6969,
+        "chrf": 48.3211,
+        "inference_seconds": 30.612
+      },
+      "marathi": {
+        "bleu": 12.399,
+        "chrf": 56.6903,
+        "inference_seconds": 9.9855
+      }
+    },
+    "m5_missing_clauses": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "latency_seconds": 0.0085
+    },
+    "m6_risk_scoring": {
+      "latency_seconds": 0.0081,
+      "methodology": "domain checklist weighted penalty rules"
+    },
+    "m7_fairness": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "latency_seconds": 0.0015
+    },
+    "m8_legal_rag": {
+      "index_vectors": 3092,
+      "embedding_dimensions": 384,
+      "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "domain_breakdown": {
+        "rental": 887,
+        "divorce": 220,
+        "property": 800,
+        "employment": 1185
+      },
+      "mean_retrieval_latency_ms": 28.42,
+      "answer_return_rate": 1.0
+    },
+    "m9_comparison": {
+      "change_detection_rate": 1.0,
+      "execution_time_seconds": 0.0661,
+      "methodology": "heuristic clause alignment with numerical delta analysis"
+    }
+  }
+}

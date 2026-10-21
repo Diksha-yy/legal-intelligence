@@ -1,0 +1,401 @@
+"""Versioned official legal-source monitoring, with permission-aware fetching.
+
+Python 3.11+. Automated fetching respects robots.txt; blocked sources are
+reported rather than bypassed. Only reviewed PDFs can enter the active index.
+"""
+from __future__ import annotations
+
+import difflib
+import hashlib
+import json
+import os
+import re
+import sqlite3
+from datetime import datetime, timezone
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
+from urllib.robotparser import RobotFileParser
+
+ROOT = Path(__file__).resolve().parents[3]
+STORE = Path(os.getenv("LEGAL_UPDATES_STORE", str(ROOT / "data" / "official_sources")))
+DB = STORE / "updates.sqlite3"
+UA = os.getenv("LEGAL_UPDATES_USER_AGENT", "LegalIntelligenceAcademicMonitor/1.0")
+MAX_BYTES = 15_000_000
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def detect_source_type(url):
+    path = urlparse(url).path.lower()
+    if "/handle/" in path:
+        return "official_record"
+    if path.endswith(".pdf"):
+        return "official_pdf"
+    if path.endswith((".xml", ".rss", ".atom")):
+        return "official_feed"
+    return "official_webpage"
+
+
+def connect():
+    STORE.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(DB, timeout=30)
+    db.row_factory = sqlite3.Row
+    db.executescript("""
+        CREATE TABLE IF NOT EXISTS sources (
+            id TEXT PRIMARY KEY, url TEXT NOT NULL, domain TEXT NOT NULL,
+            jurisdiction TEXT NOT NULL, title TEXT NOT NULL, enabled INTEGER DEFAULT 1
+        );
+        CREATE TABLE IF NOT EXISTS versions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, source_id TEXT NOT NULL,
+            fetched_at TEXT NOT NULL, sha256 TEXT NOT NULL,
+            content_type TEXT, path TEXT NOT NULL, text_path TEXT NOT NULL,
+            etag TEXT, last_modified TEXT, UNIQUE(source_id, sha256)
+        );
+        CREATE TABLE IF NOT EXISTS reviews (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, source_id TEXT NOT NULL,
+            old_version INTEGER, new_version INTEGER NOT NULL UNIQUE,
+            detected_at TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending',
+            diff_path TEXT, reviewer TEXT, reviewed_at TEXT, notes TEXT,
+            publication_date TEXT, effective_date TEXT, law_status TEXT,
+            applicable_jurisdiction TEXT
+        );
+        CREATE TABLE IF NOT EXISTS activations (
+            review_id INTEGER PRIMARY KEY, activated_at TEXT NOT NULL,
+            index_path TEXT NOT NULL
+        );
+    """)
+    db.commit()
+    return db
+
+
+def register(source_id, url, domain, jurisdiction, title):
+    u = urlparse(url)
+    if u.scheme != "https" or not u.hostname or u.username or u.password:
+        raise ValueError("A valid HTTPS source URL is required")
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", source_id):
+        raise ValueError("Invalid source ID")
+    with connect() as db:
+        db.execute("""INSERT INTO sources(id,url,domain,jurisdiction,title)
+            VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
+            url=excluded.url, domain=excluded.domain,
+            jurisdiction=excluded.jurisdiction, title=excluded.title""",
+            (source_id, url, domain, jurisdiction, title))
+    return {"status": "registered", "source_id": source_id,
+            "source_type": detect_source_type(url)}
+
+
+def list_sources():
+    with connect() as db:
+        return [dict(row) | {"source_type": detect_source_type(row["url"])}
+                for row in db.execute("SELECT * FROM sources ORDER BY id")]
+
+
+def _allowed(url, timeout=8):
+    """Check robots.txt with a timeout; deny when policy cannot be verified."""
+    u = urlparse(url)
+    if u.scheme != "https" or not u.hostname:
+        raise ValueError("Only valid HTTPS URLs are supported")
+    robots_url = f"{u.scheme}://{u.netloc}/robots.txt"
+    try:
+        request = Request(robots_url, headers={"User-Agent": UA, "Accept": "text/plain"})
+        with urlopen(request, timeout=timeout) as response:
+            if response.geturl() != robots_url:
+                raise RuntimeError("robots.txt redirect requires review")
+            raw = response.read(512_001)
+            if len(raw) > 512_000:
+                raise RuntimeError("robots.txt exceeds size limit")
+        rp = RobotFileParser()
+        rp.parse(raw.decode("utf-8", errors="replace").splitlines())
+        if not rp.can_fetch(UA, url):
+            raise PermissionError("robots.txt disallows automated fetching")
+        return True
+    except PermissionError:
+        raise
+    except (HTTPError, URLError, TimeoutError, OSError, RuntimeError) as exc:
+        raise RuntimeError(f"Cannot verify robots policy for {u.netloc}: {exc}") from exc
+
+
+class _HTMLText(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts = []
+        self.skip = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.skip += 1
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style") and self.skip:
+            self.skip -= 1
+
+    def handle_data(self, data):
+        if not self.skip:
+            self.parts.append(data)
+
+
+def _extract(raw, content_type):
+    if raw.startswith(b"%PDF"):
+        import fitz
+        with fitz.open(stream=raw, filetype="pdf") as doc:
+            return "\n".join(page.get_text(sort=True) for page in doc)
+    if "pdf" in content_type.lower():
+        raise ValueError("Response claims PDF but does not contain PDF bytes")
+    parser = _HTMLText()
+    parser.feed(raw.decode("utf-8", errors="replace"))
+    return " ".join(" ".join(parser.parts).split())
+
+
+def _save(source_id, raw, ctype, etag="", modified=""):
+    digest = hashlib.sha256(raw).hexdigest()
+    with connect() as db:
+        src = db.execute("SELECT * FROM sources WHERE id=?", (source_id,)).fetchone()
+        if not src:
+            raise KeyError(f"Unknown source: {source_id}")
+        existing = db.execute("SELECT id FROM versions WHERE source_id=? AND sha256=?",
+                              (source_id, digest)).fetchone()
+        if existing:
+            return {"status": "unchanged", "source_id": source_id,
+                    "version_id": existing["id"], "sha256": digest}
+        text = _extract(raw, ctype)
+        if len(text.strip()) < 100:
+            raise ValueError("Insufficient extracted text; may need OCR or source inspection")
+        previous = db.execute("SELECT * FROM versions WHERE source_id=? ORDER BY id DESC LIMIT 1",
+                              (source_id,)).fetchone()
+        folder = STORE / source_id / digest
+        folder.mkdir(parents=True, exist_ok=True)
+        ext = ".pdf" if raw.startswith(b"%PDF") else ".html"
+        raw_path = folder / ("source" + ext)
+        raw_path.write_bytes(raw)
+        txt_path = folder / "extracted.txt"
+        txt_path.write_text(text, encoding="utf-8")
+        cur = db.execute("""INSERT INTO versions
+            (source_id,fetched_at,sha256,content_type,path,text_path,etag,last_modified)
+            VALUES(?,?,?,?,?,?,?,?)""",
+            (source_id, now(), digest, ctype, str(raw_path), str(txt_path), etag, modified))
+        vid = cur.lastrowid
+        diff_path = folder / "change.diff"
+        if previous:
+            old = Path(previous["text_path"]).read_text(encoding="utf-8").splitlines()
+            diff = "\n".join(difflib.unified_diff(
+                old, text.splitlines(), fromfile=f"version-{previous['id']}",
+                tofile=f"version-{vid}", lineterm=""))
+        else:
+            diff = "Initial source snapshot; NOT evidence of a new amendment."
+        diff_path.write_text(diff[:200_000], encoding="utf-8")
+        review = db.execute("""INSERT INTO reviews
+            (source_id,old_version,new_version,detected_at,diff_path)
+            VALUES(?,?,?,?,?)""",
+            (source_id, previous["id"] if previous else None, vid, now(), str(diff_path)))
+        db.commit()
+        return {"status": "pending_review", "source_id": source_id,
+                "version_id": vid, "review_id": review.lastrowid,
+                "previous_version_id": previous["id"] if previous else None,
+                "sha256": digest, "content_kind": "pdf" if ext == ".pdf" else "html",
+                "note": "Content change does not establish an effective legal amendment"}
+
+
+def fetch(source_id, max_bytes=MAX_BYTES):
+    with connect() as db:
+        src = db.execute("SELECT * FROM sources WHERE id=? AND enabled=1",
+                         (source_id,)).fetchone()
+    if not src:
+        return {"status": "not_found", "source_id": source_id,
+                "message": "Source not registered or disabled"}
+    url = src["url"]
+    kind = detect_source_type(url)
+    try:
+        _allowed(url)
+    except PermissionError as exc:
+        return {"status": "access_restricted", "source_id": source_id,
+                "source_type": kind, "url": url, "message": str(exc),
+                "next_step": "Use a permitted official API/feed or authorized redistribution source"}
+    except (RuntimeError, ValueError) as exc:
+        return {"status": "policy_check_failed", "source_id": source_id,
+                "url": url, "message": str(exc)}
+
+    try:
+        req = Request(url, headers={"User-Agent": UA,
+                                    "Accept": "application/pdf,text/html,application/xhtml+xml"})
+        with urlopen(req, timeout=10) as response:
+            final = response.geturl()
+            if urlparse(final).hostname != urlparse(url).hostname:
+                return {"status": "redirect_requires_review", "source_id": source_id,
+                        "redirect_url": final,
+                        "message": "Cross-host redirect not followed for ingestion"}
+            # Check the redirected path's policy as well.
+            if final != url:
+                _allowed(final)
+            length = response.headers.get("Content-Length")
+            if length and int(length) > max_bytes:
+                raise ValueError("Source exceeds maximum size")
+            raw = response.read(max_bytes + 1)
+            if len(raw) > max_bytes:
+                raise ValueError("Source exceeds maximum size")
+            ctype = response.headers.get("Content-Type", "")
+            if raw.lstrip().lower().startswith(b"<!doctype html") or b"<html" in raw[:500].lower():
+                # A record page can be archived, but is NOT treated as an Act PDF.
+                pass
+            result = _save(source_id, raw, ctype,
+                           response.headers.get("ETag", ""),
+                           response.headers.get("Last-Modified", ""))
+            result["source_type"] = kind
+            if kind == "official_record" and result.get("content_kind") == "html":
+                result["note"] = ("Official record HTML archived for review; "
+                                  "register a permitted full-text PDF/feed for legal indexing")
+            return result
+    except PermissionError as exc:
+        return {"status": "access_restricted", "source_id": source_id,
+                "url": url, "message": str(exc)}
+    except (HTTPError, URLError, TimeoutError, ValueError, OSError) as exc:
+        return {"status": "fetch_failed", "source_id": source_id,
+                "url": url, "message": str(exc)}
+
+
+def fetch_all():
+    """Check registered sources independently; one failure never aborts the batch."""
+    results = []
+    for source in list_sources():
+        if not source["enabled"]:
+            continue
+        source_id = source["id"]
+        print(f"Checking official source: {source_id}", flush=True)
+        try:
+            result = fetch(source_id)
+            if not isinstance(result, dict):
+                result = {"status": "completed", "result": result}
+            result["source_id"] = source_id
+        except PermissionError as exc:
+            result = {"source_id": source_id, "status": "access_restricted", "message": str(exc)}
+        except (TimeoutError, ConnectionError, OSError) as exc:
+            result = {"source_id": source_id, "status": "network_error", "message": str(exc)}
+        except Exception as exc:
+            result = {"source_id": source_id, "status": "failed", "message": str(exc)}
+        results.append(result)
+    return results
+
+
+def ingest_local(source_id, path):
+    p = Path(path)
+    if p.suffix.lower() not in (".pdf", ".html", ".htm"):
+        raise ValueError("Only PDF or HTML files supported")
+    if not p.is_file() or p.stat().st_size > MAX_BYTES:
+        raise ValueError("File missing or exceeds size limit")
+    return _save(source_id, p.read_bytes(),
+                 "application/pdf" if p.suffix.lower() == ".pdf" else "text/html")
+
+
+def reviews():
+    with connect() as db:
+        return [dict(r) for r in db.execute("""SELECT r.*,s.title,s.url,s.domain,s.jurisdiction,
+            v.path AS archived_file FROM reviews r JOIN sources s ON s.id=r.source_id
+            JOIN versions v ON v.id=r.new_version ORDER BY r.id DESC""")]
+
+
+def review_decision(review_id, approve, reviewer, notes, publication_date="",
+                    effective_date="", law_status="", applicable_jurisdiction=""):
+    if not reviewer or not notes:
+        raise ValueError("Reviewer and notes are required")
+    if approve and (not law_status or not applicable_jurisdiction):
+        raise ValueError("Approval requires law status and jurisdiction")
+    with connect() as db:
+        row = db.execute("""SELECT r.status,v.path FROM reviews r
+            JOIN versions v ON v.id=r.new_version WHERE r.id=?""", (review_id,)).fetchone()
+        if not row or row["status"] != "pending":
+            raise ValueError("Review not found or already decided")
+        if approve and Path(row["path"]).suffix.lower() != ".pdf":
+            raise ValueError("Cannot approve an HTML record as full legal text; use a verified PDF")
+        db.execute("""UPDATE reviews SET status=?,reviewer=?,reviewed_at=?,notes=?,
+            publication_date=?,effective_date=?,law_status=?,applicable_jurisdiction=? WHERE id=?""",
+            ("approved" if approve else "rejected", reviewer, now(), notes,
+             publication_date, effective_date, law_status, applicable_jurisdiction, review_id))
+    return {"status": "approved" if approve else "rejected", "review_id": review_id}
+
+
+def activate(review_id):
+    """Create separate approved FAISS snapshot; never modify existing M8 index."""
+    with connect() as db:
+        row = db.execute("SELECT status FROM reviews WHERE id=?", (review_id,)).fetchone()
+        if not row or row["status"] != "approved":
+            raise ValueError("Review approval required")
+        if db.execute("SELECT 1 FROM activations WHERE review_id=?", (review_id,)).fetchone():
+            return {"status": "already_active", "review_id": review_id}
+        rows = list(db.execute("""SELECT r.id,r.new_version,v.text_path,v.path,s.url,s.title,
+            s.domain,s.jurisdiction,r.effective_date,r.law_status FROM reviews r
+            JOIN versions v ON v.id=r.new_version JOIN sources s ON s.id=r.source_id
+            WHERE r.status='approved' AND r.id IN
+            (SELECT MAX(id) FROM reviews WHERE status='approved' GROUP BY source_id)"""))
+    import faiss
+    import numpy as np
+    from sentence_transformers import SentenceTransformer
+    docs, texts = [], []
+    for r in rows:
+        if Path(r["path"]).suffix.lower() != ".pdf":
+            continue
+        words = Path(r["text_path"]).read_text(encoding="utf-8").split()
+        for start in range(0, len(words), 160):
+            chunk = " ".join(words[start:start + 200])
+            if len(chunk) < 60:
+                continue
+            texts.append(chunk)
+            docs.append({"text": chunk, "source_url": r["url"],
+                         "source_title": r["title"], "domain": r["domain"],
+                         "jurisdiction": r["jurisdiction"],
+                         "effective_date": r["effective_date"],
+                         "law_status": r["law_status"],
+                         "version_id": r["new_version"]})
+    if not docs:
+        raise ValueError("No approved full-text PDF chunks")
+    model_name = "sentence-transformers/all-MiniLM-L6-v2"
+    model = SentenceTransformer(model_name)
+    vectors = np.asarray(model.encode(texts, normalize_embeddings=True,
+                                      show_progress_bar=False), dtype="float32")
+    idx = faiss.IndexFlatIP(vectors.shape[1])
+    idx.add(vectors)
+    target = STORE / "approved_index" / f"review_{review_id}"
+    target.mkdir(parents=True, exist_ok=True)
+    faiss.write_index(idx, str(target / "index.faiss"))
+    (target / "metadata.json").write_text(json.dumps({
+        "embedding_model": model_name, "documents": docs
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    pointer = STORE / "approved_index" / "active.json"
+    temp = pointer.with_suffix(".tmp")
+    temp.write_text(json.dumps({"path": str(target), "activated_at": now()}), encoding="utf-8")
+    os.replace(temp, pointer)
+    with connect() as db:
+        db.execute("INSERT INTO activations(review_id,activated_at,index_path) VALUES(?,?,?)",
+                   (review_id, now(), str(target)))
+    return {"status": "activated", "chunks": len(docs), "path": str(target),
+            "note": "Separate index; connect search_approved to existing M8 explicitly"}
+
+
+def search_approved(query, k=5, domain=None):
+    import faiss
+    import numpy as np
+    from sentence_transformers import SentenceTransformer
+    pointer = STORE / "approved_index" / "active.json"
+    if not pointer.exists():
+        return []
+    target = Path(json.loads(pointer.read_text(encoding="utf-8"))["path"])
+    meta = json.loads((target / "metadata.json").read_text(encoding="utf-8"))
+    model = SentenceTransformer(meta["embedding_model"])
+    q = np.asarray(model.encode([query], normalize_embeddings=True), dtype="float32")
+    idx = faiss.read_index(str(target / "index.faiss"))
+    # Search whole index before domain filtering so relevant domain items aren't hidden.
+    scores, ids = idx.search(q, idx.ntotal)
+    matches = []
+    for score, i in zip(scores[0], ids[0]):
+        if i < 0:
+            continue
+        doc = meta["documents"][int(i)]
+        if domain and doc["domain"] != domain:
+            continue
+        matches.append({"score": float(score), **doc})
+        if len(matches) >= k:
+            break
+    return matches

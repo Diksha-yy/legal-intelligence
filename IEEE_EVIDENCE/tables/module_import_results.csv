@@ -1,0 +1,10 @@
+module,module_path,status,import_time_seconds,error
+M1_OCR,app.modules.m1_ocr.extractor,IMPORT_SUCCESS,1.5068,
+M2_Clause_Classification,app.modules.m2_classification.classifier,IMPORT_SUCCESS,0.0043,
+M3_Summarization,app.modules.m3_summarization.summarizer,IMPORT_SUCCESS,11.523,
+M4_Translation,app.modules.m4_translation.translator,IMPORT_SUCCESS,0.0026,
+M5_Missing_Clause,app.modules.m5_missing_clauses.missing_clause,IMPORT_SUCCESS,0.0029,
+M6_Risk_Scoring,app.modules.m6_risk_scoring.risk_scorer,IMPORT_SUCCESS,0.0031,
+M7_Fairness_Analysis,app.modules.m7_fairness.fairness_analyzer,IMPORT_SUCCESS,0.0035,
+M8_Legal_QA,app.modules.m8_rag.legal_qa,IMPORT_SUCCESS,2.052,
+M9_Document_Comparison,app.modules.m9_comparison.agreement_comparator,IMPORT_SUCCESS,0.004,

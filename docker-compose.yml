@@ -1,0 +1,15 @@
+services:
+  legal-intelligence:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: legal-intelligence-app
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - JWT_SECRET=legal-intelligence-production-secret-key-change-me
+      - FIREBASE_STORAGE_BUCKET=${FIREBASE_STORAGE_BUCKET:-}
+    restart: unless-stopped
+    volumes:
+      - ./data/uploads:/app/data/uploads

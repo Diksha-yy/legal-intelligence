@@ -1,0 +1,21 @@
+M6 Risk Scoring Evaluation
+========================================
+Document Type: employment
+Expected Score: 25
+Actual Score: 25
+Absolute Score Difference: 0
+Reference Score Match: True
+Risk Level: Lower screening score
+Total Findings: 2
+Execution Time: 0.0007 seconds
+
+Findings:
+- Issue: Potentially missing: Termination and Notice
+  Weight: 15
+  Type: Missing clause
+- Issue: Potentially missing: Confidentiality
+  Weight: 10
+  Type: Missing clause
+
+Disclaimer:
+This is a preliminary rule-based screening indicator, not legal advice or a determination of enforceability. Review the original document and applicable law.

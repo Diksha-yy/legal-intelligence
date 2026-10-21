@@ -1,0 +1,17 @@
+M3 SUMMARIZATION EVALUATION
+===========================
+
+Reference summary:
+The employee will work as a software developer at ABC Technologies, receive a monthly salary of 25000 rupees, work eight hours per day, maintain confidentiality, and provide or receive thirty days notice for termination.
+
+Generated summary:
+The employee will work as a software developer for ABC Technologies. The employee will receive a monthly salary of 25,000 rupees.
+
+rouge1: Precision=0.7727, Recall=0.5000, F1=0.6071
+rouge2: Precision=0.5714, Recall=0.3636, F1=0.4444
+rougeL: Precision=0.7273, Recall=0.4706, F1=0.5714
+
+Model: facebook/bart-large-cnn
+Device: cpu
+Chunks processed: 1
+Inference time: 16.1404 seconds

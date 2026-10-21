@@ -1,0 +1,45 @@
+
+M2 CLAUSE CLASSIFICATION EVALUATION
+
+Test clauses: 40
+
+Accuracy:           0.8250
+Accuracy (%):       82.50%
+
+Macro Precision:    0.8283
+Macro Recall:       0.7333
+Macro F1:           0.7471
+
+Weighted Precision: 0.9318
+Weighted Recall:    0.8250
+Weighted F1:        0.8405
+
+CLASSIFICATION REPORT
+                                  precision    recall  f1-score   support
+
+              Employment Details       0.45      1.00      0.62         5
+                   Working Hours       1.00      1.00      1.00         5
+         Salary and Compensation       1.00      1.00      1.00         5
+                        Benefits       1.00      1.00      1.00         5
+Conditions and Background Checks       1.00      0.40      0.57         5
+       Acceptance and Signatures       1.00      0.80      0.89         5
+          Termination and Notice       1.00      0.60      0.75         5
+                 Confidentiality       1.00      0.80      0.89         5
+                    Unclassified       0.00      0.00      0.00         0
+
+                        accuracy                           0.82        40
+                       macro avg       0.83      0.73      0.75        40
+                    weighted avg       0.93      0.82      0.84        40
+
+
+CONFUSION MATRIX
+                                  Employment Details  Working Hours  Salary and Compensation  Benefits  Conditions and Background Checks  Acceptance and Signatures  Termination and Notice  Confidentiality  Unclassified
+Employment Details                                 5              0                        0         0                                 0                          0                       0                0             0
+Working Hours                                      0              5                        0         0                                 0                          0                       0                0             0
+Salary and Compensation                            0              0                        5         0                                 0                          0                       0                0             0
+Benefits                                           0              0                        0         5                                 0                          0                       0                0             0
+Conditions and Background Checks                   3              0                        0         0                                 2                          0                       0                0             0
+Acceptance and Signatures                          1              0                        0         0                                 0                          4                       0                0             0
+Termination and Notice                             2              0                        0         0                                 0                          0                       3                0             0
+Confidentiality                                    0              0                        0         0                                 0                          0                       0                4             1
+Unclassified                                       0              0                        0         0                                 0                          0                       0                0             0

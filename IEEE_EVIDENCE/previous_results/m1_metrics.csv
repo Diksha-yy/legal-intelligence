@@ -1,0 +1,2 @@
+document,pages,CER,WER,Character_Accuracy,Word_Accuracy,Processing_Time
+m1_synthetic_test.pdf,1,0.0,0.0,100.0,100.0,0.0321

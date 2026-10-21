@@ -1,0 +1,72 @@
+import os
+import requests
+import streamlit as st
+
+API = os.getenv('LEGAL_AI_API', 'http://127.0.0.1:8000').rstrip('/')
+st.set_page_config(page_title='Legal Intelligence', page_icon='⚖️', layout='wide')
+st.title('⚖️ Legal Intelligence')
+st.caption('Multilingual legal document analysis • AI-assisted screening • Human review required')
+with st.sidebar:
+    st.header('Settings')
+    domain = st.selectbox('Document category', ['Auto Detect','employment','rental','property','divorce'])
+    language = st.selectbox('Summary language', ['Hindi','Marathi','English'])
+    st.caption('Legal findings are informational, not legal advice.')
+
+tab1, tab2, tab3 = st.tabs(['📄 Analyze PDF', '🔍 Legal Knowledge Search', '🔄 Compare Agreements'])
+with tab1:
+    uploaded = st.file_uploader('Upload legal PDF', type=['pdf'], key='analyze')
+    if st.button('Analyze Document', type='primary', disabled=uploaded is None):
+        with st.spinner('Analyzing document. First run may load large models...'):
+            try:
+                params = {'target_language': language}
+                if domain != 'Auto Detect': params['document_type'] = domain
+                response = requests.post(f'{API}/api/analyze-complete', params=params,
+                    files={'file': (uploaded.name, uploaded.getvalue(), 'application/pdf')}, timeout=300)
+                response.raise_for_status()
+                data = response.json()
+                st.success(f"Analyzed: {data.get('document_type','unknown')} document")
+                c1,c2,c3 = st.columns(3)
+                c1.metric('Pages', data.get('ocr',{}).get('page_count','—'))
+                c2.metric('Clauses', data.get('classification',{}).get('total_clauses','—'))
+                c3.metric('Document category', data.get('document_type','—'))
+                st.subheader('English summary'); st.write(data.get('summary','Not available'))
+                st.subheader(f'{language} translation'); st.write(data.get('translated_summary','Not available'))
+                for title,key in [('Clause classification','classification'),('Missing clauses','missing_clauses'),
+                                  ('Risk analysis','risk_analysis'),('Fairness analysis','fairness_analysis')]:
+                    with st.expander(title, expanded=title in ('Risk analysis','Missing clauses')):
+                        st.json(data.get(key,{}))
+                st.download_button('Download analysis JSON', data=__import__('json').dumps(data,indent=2,ensure_ascii=False),
+                                   file_name='legal_analysis.json', mime='application/json')
+            except requests.RequestException as e:
+                st.error(f'API request failed: {e}')
+                if getattr(e,'response',None) is not None: st.code(e.response.text[:2000])
+with tab2:
+    question = st.text_input('Ask a question about indexed legal documents', 'What are the duties of a promoter under Section 11?')
+    search_domain = st.selectbox('Knowledge domain', ['property','employment','rental','divorce'], key='searchdomain')
+    if st.button('Search Legal Knowledge'):
+        try:
+            r=requests.post(f'{API}/api/legal-knowledge/search',json={'question':question,'top_k':5,
+                            'domain':search_domain,'jurisdiction':'India'},timeout=120)
+            r.raise_for_status(); data=r.json()
+            st.info(f"Retrieved {data.get('total_results',len(data.get('results',[])))} passages (not a generated legal opinion).")
+            for item in data.get('results',[]):
+                with st.expander(f"{item.get('title','Source')} • chunk {item.get('chunk_number','?')} • similarity {item.get('similarity','?')}"):
+                    st.write(item.get('text',''))
+                    st.write('Source:',item.get('source_url','Not recorded'))
+                    st.caption('Source, effective date, and amendment status require verification.')
+        except requests.RequestException as e: st.error(str(e))
+with tab3:
+    left,right=st.columns(2)
+    with left: file1=st.file_uploader('Original PDF',type=['pdf'],key='compare1')
+    with right: file2=st.file_uploader('Revised PDF',type=['pdf'],key='compare2')
+    if st.button('Compare Documents',disabled=not(file1 and file2)):
+        with st.spinner('Comparing clauses...'):
+            try:
+                r=requests.post(f'{API}/api/ai/compare',files={'file1':(file1.name,file1.getvalue(),'application/pdf'),
+                    'file2':(file2.name,file2.getvalue(),'application/pdf')},timeout=240)
+                r.raise_for_status(); data=r.json()
+                st.metric('Changed clauses',len(data.get('changed_clauses',[])))
+                st.metric('Removed clauses',len(data.get('missing_from_document2',[])))
+                st.metric('Added clauses',len(data.get('missing_from_document1',[])))
+                st.json(data)
+            except requests.RequestException as e: st.error(str(e))

@@ -1,0 +1,24 @@
+M7 Fairness Analysis Evaluation
+========================================
+Document Type: employment
+Expected Indicators: 6
+Detected Indicators: 7
+True Positives: 6
+False Positives: 0
+False Negatives: 0
+Precision: 1.0000
+Recall: 1.0000
+F1-Score: 1.0000
+Execution Time: 0.0015 seconds
+
+Findings:
+- Unilateral termination: terminate the employee without cause
+- Unilateral termination: company may terminate
+- Unilateral modification: modify the employment terms at any time
+- Broad indemnity: indemnify the company against all losses
+- Penalty or financial deduction: penalty
+- Broad liability: unlimited liability
+- Restrictive obligations: non-compete
+
+Disclaimer:
+This is a preliminary keyword-based analysis. It does not determine whether a document is fair, unfair, valid, or enforceable. Results depend on context and require human review.

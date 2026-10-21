@@ -1,0 +1,8 @@
+M1 OCR FUNCTIONAL EVALUATION
+============================
+PDF: m1_synthetic_test.pdf
+Page count: 1
+CER: 0.0000
+WER: 0.0000
+Extracted text: The employee shall receive a monthly salary of 25000 rupees. The notice period shall be
+thirty days.

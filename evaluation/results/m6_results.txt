@@ -1,0 +1,30 @@
+M6 Risk Scoring Evaluation
+========================================
+Document Type: employment
+Expected Score: 25
+Actual Score: 50
+Absolute Score Difference: 25
+Reference Score Match: False
+Risk Level: Moderate screening score
+Total Findings: 5
+Execution Time: 0.0081 seconds
+
+Findings:
+- Issue: Potentially missing: Salary and Compensation
+  Weight: 15
+  Type: Missing clause
+- Issue: Potentially missing: Acceptance and Signatures
+  Weight: 10
+  Type: Missing clause
+- Issue: Potentially missing: Termination and Notice
+  Weight: 15
+  Type: Missing clause
+- Issue: Potentially missing: Confidentiality
+  Weight: 10
+  Type: Missing clause
+- Issue: Compensation details need review
+  Weight: 0
+  Type: Review reminder
+
+Disclaimer:
+This is a preliminary rule-based screening indicator, not legal advice or a determination of enforceability. Review the original document and applicable law.

@@ -1,0 +1,34 @@
+Module,Metric_Name,Value,Unit,Scope
+M1_OCR,Character_Error_Rate (CER),0.0,ratio,Synthetic legal PDF
+M1_OCR,Word_Error_Rate (WER),0.0,ratio,Synthetic legal PDF
+M1_OCR,Processing_Latency,0.0666,seconds/page,Digital extract
+M2_Classifier_Keyword,Accuracy,0.825,ratio,40 synthetic clauses
+M2_Classifier_Keyword,Macro_F1,0.8405,ratio,40 synthetic clauses
+M2_Classifier_Keyword,Mean_Latency,0.58,ms/clause,CPU inference
+M2_Classifier_Semantic,Accuracy,0.875,ratio,40 synthetic clauses
+M2_Classifier_Semantic,Macro_F1,0.8681,ratio,40 synthetic clauses
+M2_Classifier_Semantic,Mean_Latency,371.67,ms/clause,CPU all-MiniLM-L6-v2
+M2_Classifier_Hybrid,Accuracy,0.875,ratio,40 synthetic clauses
+M2_Classifier_Hybrid,Macro_F1,0.8681,ratio,40 synthetic clauses
+M2_Classifier_Hybrid,Mean_Latency,15.76,ms/clause,CPU keyword-guided semantic
+M3_Summarizer,ROUGE-1_F1,0.6071,ratio,facebook/bart-large-cnn
+M3_Summarizer,ROUGE-2_F1,0.4444,ratio,facebook/bart-large-cnn
+M3_Summarizer,ROUGE-L_F1,0.5714,ratio,facebook/bart-large-cnn
+M3_Summarizer,Inference_Time,16.1404,seconds,CPU BART chunk inference
+M4_Translator_Hindi,BLEU,8.6969,score,facebook/nllb-200-distilled-600M
+M4_Translator_Hindi,chrF++,48.3211,score,facebook/nllb-200-distilled-600M
+M4_Translator_Hindi,Inference_Time,30.612,seconds,CPU 100-word chunk
+M4_Translator_Marathi,BLEU,12.399,score,facebook/nllb-200-distilled-600M
+M4_Translator_Marathi,chrF++,56.6903,score,facebook/nllb-200-distilled-600M
+M4_Translator_Marathi,Inference_Time,9.9855,seconds,CPU 100-word chunk
+M5_Missing_Clauses,Precision,0.5,ratio,Synthetic employment checklist
+M5_Missing_Clauses,Recall,1.0,ratio,Synthetic employment checklist
+M5_Missing_Clauses,F1_Score,0.6667,ratio,Synthetic employment checklist
+M7_Fairness_Analysis,Precision,1.0,ratio,Synthetic employment contract
+M7_Fairness_Analysis,Recall,1.0,ratio,Synthetic employment contract
+M7_Fairness_Analysis,F1_Score,1.0,ratio,Synthetic employment contract
+M8_Legal_RAG,Index_Vectors,3092,vectors,FAISS Index 16 Statutes/Docs
+M8_Legal_RAG,Mean_Retrieval_Latency,28.42,ms,Embedding + FAISS search
+M8_Legal_RAG,Answer_Return_Rate,1.0,ratio,Document Q&A evaluation
+M9_Agreement_Comparison,Change_Detection_Rate,1.0,ratio,Labeled modified clauses
+M9_Agreement_Comparison,Execution_Time,0.0661,seconds,Pairwise clause diffing

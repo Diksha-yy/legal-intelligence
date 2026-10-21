@@ -1,0 +1,10 @@
+﻿gold\pred,Acceptance and Signatures,Benefits,Conditions and Background Checks,Confidentiality,Employment Details,Salary and Compensation,Termination and Notice,Working Hours,Unclassified
+Acceptance and Signatures,4,0,0,0,1,0,0,0,0
+Benefits,0,5,0,0,0,0,0,0,0
+Conditions and Background Checks,0,0,2,0,3,0,0,0,0
+Confidentiality,0,0,0,4,0,0,0,0,1
+Employment Details,0,0,0,0,5,0,0,0,0
+Salary and Compensation,0,0,0,0,0,5,0,0,0
+Termination and Notice,0,0,0,0,2,0,3,0,0
+Working Hours,0,0,0,0,0,0,0,5,0
+Unclassified,0,0,0,0,0,0,0,0,0

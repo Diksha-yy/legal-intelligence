@@ -1,0 +1,239 @@
+LEGAL INTELLIGENCE - EVALUATION RESULTS
+
+========== evaluation\m2_metrics.txt ==========
+M2 CLAUSE CLASSIFICATION EVALUATION
+===================================
+Test clauses: 40
+Test examples per gold category:
+actual_label
+Employment Details                  5
+Working Hours                       5
+Salary and Compensation             5
+Benefits                            5
+Conditions and Background Checks    5
+Acceptance and Signatures           5
+Termination and Notice              5
+Confidentiality                     5
+
+Accuracy:           0.8250
+Accuracy (%):       82.50%
+
+Macro Precision:    0.9318
+Macro Recall:       0.8250
+Macro F1:           0.8405
+
+Weighted Precision: 0.9318
+Weighted Recall:    0.8250
+Weighted F1:        0.8405
+
+CLASSIFICATION REPORT
+                                  precision    recall  f1-score   support
+
+              Employment Details     0.4545    1.0000    0.6250         5
+                   Working Hours     1.0000    1.0000    1.0000         5
+         Salary and Compensation     1.0000    1.0000    1.0000         5
+                        Benefits     1.0000    1.0000    1.0000         5
+Conditions and Background Checks     1.0000    0.4000    0.5714         5
+       Acceptance and Signatures     1.0000    0.8000    0.8889         5
+          Termination and Notice     1.0000    0.6000    0.7500         5
+                 Confidentiality     1.0000    0.8000    0.8889         5
+
+                       micro avg     0.8462    0.8250    0.8354        40
+                       macro avg     0.9318    0.8250    0.8405        40
+                    weighted avg     0.9318    0.8250    0.8405        40
+
+
+NOTE:
+These results describe only the CSV test set used for this run.
+The supplied balanced draft examples are synthetic and their labels require
+independent human review before being described as a gold-standard test set.
+
+========== evaluation\results\m1_results.txt ==========
+M1 OCR FUNCTIONAL EVALUATION
+============================
+PDF: m1_synthetic_test.pdf
+Page count: 1
+CER: 0.0000
+WER: 0.0000
+Extracted text: The employee shall receive a monthly salary of 25000 rupees. The notice period shall be
+thirty days.
+
+========== evaluation\results\m3_results.txt ==========
+M3 SUMMARIZATION EVALUATION
+===========================
+
+Reference summary:
+The employee will work as a software developer at ABC Technologies, receive a monthly salary of 25000 rupees, work eight hours per day, maintain confidentiality, and provide or receive thirty days notice for termination.
+
+Generated summary:
+The employee will work eight hours per day, five days per week. The employee will receive a monthly salary of 25,000 rupees.
+
+rouge1: Precision=0.6522, Recall=0.4412, F1=0.5263
+rouge2: Precision=0.5000, Recall=0.3333, F1=0.4000
+rougeL: Precision=0.4348, Recall=0.2941, F1=0.3509
+
+Model: facebook/bart-large-cnn
+Device: cpu
+Chunks processed: 1
+Inference time: 10.1963 seconds
+
+========== evaluation\results\m4_results.txt ==========
+M4 TRANSLATION EVALUATION
+=========================
+
+Source text:
+The employee will receive a monthly salary of 25000 rupees. The employee must provide thirty days notice before termination.
+
+NOTE: Reference translations are illustrative drafts requiring fluent-speaker review.
+
+Target language: Hindi
+Translation: कर्मचारी को 25000 रुपये का मासिक वेतन प्राप्त होगा। कर्मचारी को समाप्ति से पहले तीस दिन की सूचना देनी होगी।
+BLEU: 8.6969
+chrF++: 48.3211
+Inference time: 17.0990 seconds
+Model: facebook/nllb-200-distilled-600M
+
+Target language: Marathi
+Translation: कर्मचाऱ्याला 25000 रुपयांचा मासिक पगार मिळेल. कर्मचाऱ्याला निवृत्त होण्यापूर्वी तीस दिवसांची सूचना देणे आवश्यक आहे.
+BLEU: 12.3990
+chrF++: 56.6903
+Inference time: 9.5199 seconds
+Model: facebook/nllb-200-distilled-600M
+
+
+========== evaluation\results\m5_results.txt ==========
+M5 Missing Clause Detection Evaluation
+=============================================
+Document Type: employment
+Total Expected Clauses: 8
+Total Detected Clauses: 6
+Total Potentially Missing: 2
+True Positives: 2
+False Positives: 0
+False Negatives: 0
+Precision: 1.0000
+Recall: 1.0000
+F1-Score: 1.0000
+Execution Time: 0.0016 seconds
+
+Predicted Missing Clauses:
+- Termination and Notice
+- Confidentiality
+
+========== evaluation\results\m6_results.txt ==========
+M6 Risk Scoring Evaluation
+========================================
+Document Type: employment
+Expected Score: 25
+Actual Score: 25
+Absolute Score Difference: 0
+Reference Score Match: True
+Risk Level: Lower screening score
+Total Findings: 2
+Execution Time: 0.0007 seconds
+
+Findings:
+- Issue: Potentially missing: Termination and Notice
+  Weight: 15
+  Type: Missing clause
+- Issue: Potentially missing: Confidentiality
+  Weight: 10
+  Type: Missing clause
+
+Disclaimer:
+This is a preliminary rule-based screening indicator, not legal advice or a determination of enforceability. Review the original document and applicable law.
+
+========== evaluation\results\m7_results.txt ==========
+M7 Fairness Analysis Evaluation
+========================================
+Document Type: employment
+Expected Indicators: 6
+Detected Indicators: 7
+True Positives: 6
+False Positives: 0
+False Negatives: 0
+Precision: 1.0000
+Recall: 1.0000
+F1-Score: 1.0000
+Execution Time: 0.0069 seconds
+
+Findings:
+- Unilateral termination: terminate the employee without cause
+- Unilateral termination: company may terminate
+- Unilateral modification: modify the employment terms at any time
+- Broad indemnity: indemnify the company against all losses
+- Penalty or financial deduction: penalty
+- Broad liability: unlimited liability
+- Restrictive obligations: non-compete
+
+Disclaimer:
+This is a preliminary keyword-based analysis. It does not determine whether a document is fair, unfair, valid, or enforceable. Results depend on context and require human review.
+
+========== evaluation\results\m8_results.txt ==========
+M8 Legal QA Evaluation
+========================================
+Total Questions: 5
+Document Chunks: 1
+Indexing Time: 0.1366 seconds
+Reference Answer Support Rate: 1.0000
+Reference Answer Return Rate: 1.0000
+Average Query Time: 0.0155 seconds
+
+Question 1: What is the monthly salary?
+Expected Answer: INR 40,000
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0224 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.3760, rank=1
+
+Question 2: How many hours per week must the employee work?
+Expected Answer: 40 hours per week
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0189 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.5205, rank=1
+
+Question 3: What is the notice period?
+Expected Answer: 30 days
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0109 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.3137, rank=1
+
+Question 4: What benefits are provided?
+Expected Answer: medical insurance
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0129 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.2118, rank=1
+
+Question 5: What information must remain confidential?
+Expected Answer: trade secrets
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0127 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.2064, rank=1
+
+========== evaluation\results\m9_results.txt ==========
+M9 AGREEMENT COMPARISON EVALUATION
+=============================================
+Document 1 clauses: 7
+Document 2 clauses: 7
+Matched clauses: 7
+Changed clauses: 0
+Missing from Document 2: 0
+Missing from Document 1: 0
+Expected changes: 2
+Detected expected changes: 0
+Development change detection rate: 0.00%
+Execution time: 0.1911 seconds
+
+CHANGED CLAUSES:
+
+DISCLAIMER:
+This is a preliminary automated comparison. Similarity thresholds and text matching are prototype settings and have not been validated. The system may miss changes or produce incorrect matches. Review the original documents before making legal or contractual decisions.

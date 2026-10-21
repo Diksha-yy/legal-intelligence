@@ -1,0 +1,22 @@
+M4 TRANSLATION EVALUATION
+=========================
+
+Source text:
+The employee will receive a monthly salary of 25000 rupees. The employee must provide thirty days notice before termination.
+
+NOTE: Reference translations are illustrative drafts requiring fluent-speaker review.
+
+Target language: Hindi
+Translation: कर्मचारी को 25000 रुपये का मासिक वेतन प्राप्त होगा। कर्मचारी को समाप्ति से पहले तीस दिन की सूचना देनी होगी।
+BLEU: 8.6969
+chrF++: 48.3211
+Inference time: 17.0990 seconds
+Model: facebook/nllb-200-distilled-600M
+
+Target language: Marathi
+Translation: कर्मचाऱ्याला 25000 रुपयांचा मासिक पगार मिळेल. कर्मचाऱ्याला निवृत्त होण्यापूर्वी तीस दिवसांची सूचना देणे आवश्यक आहे.
+BLEU: 12.3990
+chrF++: 56.6903
+Inference time: 9.5199 seconds
+Model: facebook/nllb-200-distilled-600M
+

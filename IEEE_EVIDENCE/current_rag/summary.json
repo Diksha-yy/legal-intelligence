@@ -1,0 +1,18 @@
+{
+  "index_vectors": 3092,
+  "embedding_dimensions": 384,
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "documents": 16,
+  "domain_chunks": {
+    "rental": 887,
+    "divorce": 220,
+    "property": 800,
+    "employment": 1185
+  },
+  "queries_run": 8,
+  "reviewed_gold_queries": 7,
+  "mean_latency_ms": 28.42,
+  "latency_includes_query_embedding": true,
+  "legal_sources_verified": false,
+  "metric_note": "Recall@K here means query-level hit rate (at least one gold passage in top K); only human-reviewed gold rows are scored."
+}

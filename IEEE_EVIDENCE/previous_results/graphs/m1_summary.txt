@@ -1,0 +1,9 @@
+M1 OCR PERFORMANCE SUMMARY
+==========================
+Documents evaluated: 1
+Total pages: 1
+Mean CER: 0.0000%
+Mean WER: 0.0000%
+Mean Character Score: 100.00%
+Mean Word Score: 100.00%
+Mean Processing Time: 0.0321 seconds

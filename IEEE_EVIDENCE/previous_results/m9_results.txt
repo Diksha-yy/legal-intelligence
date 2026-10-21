@@ -1,0 +1,43 @@
+M9 AGREEMENT COMPARISON EVALUATION
+=============================================
+Document 1 clauses: 5
+Document 2 clauses: 5
+Matched clauses: 5
+Changed clauses: 2
+Missing from Document 2: 0
+Missing from Document 1: 0
+Expected changes: 2
+Detected expected changes: 2
+Development change detection rate: 100.00%
+Execution time: 0.1674 seconds
+
+CHANGED CLAUSES:
+{
+  "document1_clause": "The employee must provide 30 days notice\nbefore leaving the company.",
+  "document2_clause": "The employee must provide 60 days notice\nbefore leaving the company.",
+  "similarity": 0.94,
+  "semantic_similarity": 0.94,
+  "text_similarity": 0.9853,
+  "document1_numbers": [
+    "30"
+  ],
+  "document2_numbers": [
+    "60"
+  ]
+}
+{
+  "document1_clause": "The monthly salary will be 30000 rupees.",
+  "document2_clause": "The monthly salary will be 35000 rupees.",
+  "similarity": 0.9263,
+  "semantic_similarity": 0.9263,
+  "text_similarity": 0.975,
+  "document1_numbers": [
+    "30000"
+  ],
+  "document2_numbers": [
+    "35000"
+  ]
+}
+
+DISCLAIMER:
+Preliminary automated comparison. All changes and matches require human review.

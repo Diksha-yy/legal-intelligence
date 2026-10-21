@@ -1,0 +1,5 @@
+﻿domain,questions_run,reviewed_questions,mean_latency_ms,recall_at_1,recall_at_3,recall_at_5,mrr
+divorce,2,2,25.27,0,0,0,0.0
+employment,2,2,27.16,0.5,0.5,0.5,0.5
+property,2,1,26.05,0,0,0,0.0
+rental,2,2,35.19,0,0.5,1,0.35

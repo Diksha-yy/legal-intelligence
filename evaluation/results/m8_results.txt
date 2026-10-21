@@ -1,0 +1,48 @@
+M8 Legal QA Evaluation
+========================================
+Total Questions: 5
+Document Chunks: 1
+Indexing Time: 0.0452 seconds
+Reference Answer Support Rate: 1.0000
+Reference Answer Return Rate: 1.0000
+Average Query Time: 0.0136 seconds
+
+Question 1: What is the monthly salary?
+Expected Answer: INR 40,000
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0139 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.3760, rank=1
+
+Question 2: How many hours per week must the employee work?
+Expected Answer: 40 hours per week
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0112 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.5205, rank=1
+
+Question 3: What is the notice period?
+Expected Answer: 30 days
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0142 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.3137, rank=1
+
+Question 4: What benefits are provided?
+Expected Answer: medical insurance
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0143 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.2118, rank=1
+
+Question 5: What information must remain confidential?
+Expected Answer: trade secrets
+Answer Supported: True
+Answer Returned: True
+Query Time: 0.0142 seconds
+Retrieved Sources:
+- Chunk 1, similarity=0.2064, rank=1

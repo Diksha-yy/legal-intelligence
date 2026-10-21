@@ -1,0 +1,206 @@
+﻿question_id,question,requested_domain,rank,similarity,retrieved_domain,document_id,page,chunk_id,text_excerpt,latency_ms
+1,What are tenant rights concerning essential services under Maharashtra rental law?,rental,1,0.81706,rental,RENT_001,26,RENT_001:p26:c1,"22 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+provisions of this Act, be deemed to become the tenant of his landlord on
+the same terms and conditions as he would have held from the tenant if
+the tenancy had continued.
+26. Notwithstandi",43.17
+1,What are tenant rights concerning essential services under Maharashtra rental law?,rental,2,0.81238,rental,RENT_001,34,RENT_001:p34:c1,"30 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+55. (1) Notwithstanding anything contained in this Act or any other
+law for the time being in force, any agreement for leave and licence or
+letting of any premises, entered into between the",43.17
+1,What are tenant rights concerning essential services under Maharashtra rental law?,rental,3,0.79503,rental,RENT_001,6,RENT_001:p6:c1,"2 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+(b) this Act shall apply to any premises let for any or all purposes
+specified in sub-section ( 1) in the areas other than those specified in
+Schedule I and Schedule II.
+3. (1) This Act shal",43.17
+1,What are tenant rights concerning essential services under Maharashtra rental law?,rental,4,0.78203,rental,RENT_001,14,RENT_001:p14:c1,"10 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+(b) Before making any increase under clause ( a), the landlord shall
+obtain, in the prescribed manner and in the prescribed form, a declaration
+from the prescribed authority or a certificat",43.17
+1,What are tenant rights concerning essential services under Maharashtra rental law?,rental,5,0.78153,rental,RENT_001,27,RENT_001:p27:c1,"2000 : Mah. XVIII] The Maharashtra Rent Control Act, 1999 23
+29. (1) No landlord, either himself or through any person  acting or
+purporting to act on his behalf, shall, without just or sufficient cause, cut-
+off or withhold any essential supply or s",43.17
+2,Is registration required for a leave and licence agreement in Maharashtra?,rental,1,0.68936,property,PROP_002,9,PROP_002:p9:c4,"under sub-section (1), at any time before the 
+commencement of the Maharashtra Ownership Flats (Regulation of the Mah.V 
+promotion of construction, sale, management and transfer) (Amendment and of 
+Validating Provisions) Act, 1983, and such agreement",27.2
+2,Is registration required for a leave and licence agreement in Maharashtra?,rental,2,0.66699,rental,RENT_001,34,RENT_001:p34:c1,"30 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+55. (1) Notwithstanding anything contained in this Act or any other
+law for the time being in force, any agreement for leave and licence or
+letting of any premises, entered into between the",27.2
+2,Is registration required for a leave and licence agreement in Maharashtra?,rental,3,0.66573,rental,RENT_001,32,RENT_001:p32:c1,"28 The Maharashtra Rent Control Act, 1999 [2000 : Mah. XVIII
+(c) Where leave is granted to the tenant or licensee to contest the
+application the Competent Authority shall commence the hearing of the
+application as early as practicable and shall, as f",27.2
+2,Is registration required for a leave and licence agreement in Maharashtra?,rental,4,0.63681,rental,RENT_003,45,RENT_003:p45:c1,"45 
+ 
+""(3) No registering officer shall accept for registration any document involving transfer of 
+property including contract for sale of immovable property belonging to or vested in the Government 
+of Kerala or public sector undertakings operating",27.2
+2,Is registration required for a leave and licence agreement in Maharashtra?,rental,5,0.62657,property,PROP_002,10,PROP_002:p10:c1,"1963 : Mah. XLVI Maharashtra Ownership Flats (Regulation of the promotion of 7 
+construction, sale, management and transfer) Act, 1963 
+Provided further that, on presenting a document for registration as 
+aforesaid if the person executing such docume",27.2
+3,What legal provisions govern payment of wages to employees?,employment,1,0.69227,employment,EMP_001,8,EMP_001:p8:c1,"8 
+ 
+(g) remuneration payable under any award or settlement between the parties or order of a 
+court or Tribunal; 
+(h) any overtime allowance; 
+(i) any commission payable to the employee; 
+(j) any gratuity payable on the termination of employment; 
+(",25.71
+3,What legal provisions govern payment of wages to employees?,employment,2,0.69074,employment,EMP_002,13,EMP_002:p13:c1,"(g) remuneration payable under any award or settlement between the parties or order 
+of a court or Tribunal;  
+ (h) any overtime allowance; 
+ (i) any commission payable to the employee;  
+(j) any gratuity payable on the termination of employment; or ",25.71
+3,What legal provisions govern payment of wages to employees?,employment,3,0.68881,employment,EMP_003,55,EMP_003:p55:c3,"of compensation awarded to the employee in accordance with the law of that country. 
+(3) The Central Government may, by notification, specify for the purposes of  sub-section (1), such 
+monthly wages in relation to an employee as it may consider nece",25.71
+3,What legal provisions govern payment of wages to employees?,employment,4,0.68255,employment,EMP_001,31,EMP_001:p31:c4,"may extend the coverage of such provisions to the Government 
+establishments also;  
+ (f) it provides that the wages to employees may also be paid by cheque or through digital or 
+electronic mode or by crediting it in the bank account of the employee",25.71
+3,What legal provisions govern payment of wages to employees?,employment,5,0.66739,employment,EMP_003,34,EMP_003:p34:c2,"s Chapter in respect of an employee shall  
+comprise contribution payable by the employer (hereinafter referred to as the employer's contribution) and 
+contribution payable by the employee (hereinafter referred to as the employee's contribution) and ",25.71
+4,What rules relate to occupational safety and working conditions?,employment,1,0.78238,employment,EMP_004,27,EMP_004:p27:c1,"27 
+ 
+18. Occupational safety and health standards .—(1) The Central Government shall declare, by 
+notification, standards on occupational safety and health for workplaces relating to factory, mine, dock 
+work, beedi and cigar, building and other con",28.62
+4,What rules relate to occupational safety and working conditions?,employment,2,0.71406,employment,EMP_004,25,EMP_004:p25:c1,"25 
+ 
+(b) comply with the safety and health requirements specified in the standards;  
+(c) co-operate with the employer in meeting the statutory obligations of the employer under this 
+Code; 
+(d) if any situation which is unsafe or unhealthy comes to",28.62
+4,What rules relate to occupational safety and working conditions?,employment,3,0.70074,employment,EMP_004,83,EMP_004:p83:c4,"to health, safety, welfare and working conditions of workers; 
+(ii) to apply the provisions of the proposed Code for all establishments having ten or more 
+workers, other than the establishments relating to mines and docks; 
+IndiaCode",28.62
+4,What rules relate to occupational safety and working conditions?,employment,4,0.70064,employment,EMP_004,65,EMP_004:p65:c2,"the dangerous occupation or processes under clause ( a) of    
+sub-section (2) of section 42; 
+(zd) medical supervision and other establishment under clause (b) of sub-section (2) of section 42; 
+(ze) other establishment under clause (c) of sub-secti",28.62
+4,What rules relate to occupational safety and working conditions?,employment,5,0.69898,employment,EMP_004,80,EMP_004:p80:c4,"s, insulation work, demolition operations, excavation, 
+underground construction and handling materials;  
+(69) the safety policy, that is to say, a policy relating to steps to be taken to ensure the 
+safety and health of the building workers, the ad",28.62
+5,What duties does a promoter have under the Real Estate Regulation Act?,property,1,0.70847,property,PROP_001,3,PROP_001:p3:c2,"ithout first entering into agreement for sale. 
+14. Adherence to sanctioned plans and project specifications by the promoter. 
+15. Obligations of promoter in case of transfer of a real estate project to a third party. 
+16. Obligations of promoter reg",29.93
+5,What duties does a promoter have under the Real Estate Regulation Act?,property,2,0.70676,property,PROP_001,24,PROP_001:p24:c4,"iance of the obligations cast upon the promoters, the allottees and the real 
+estate agents under this Act and the rules and regulations made thereunder; 
+(g) to ensure compliance of its regulations or orders or directions made in exercis e of its po",29.93
+5,What duties does a promoter have under the Real Estate Regulation Act?,property,3,0.69378,property,PROP_001,18,PROP_001:p18:c4,"all be entitled to receive appropriate compensation in the manner as provided under this Act. 
+15. Obligations of promoter in case of transfer of a real e state project to a third party.—(1) The 
+promoter shall not transfer or assign his majority rig",29.93
+5,What duties does a promoter have under the Real Estate Regulation Act?,property,4,0.68711,property,PROP_002,14,PROP_002:p14:c3,"of conveyance deed conveying 
+the right, title and interest of the promoter in the land and building in 
+- - -favour -of the applicant, -as deemed- conveyance. - --- ---- 
+(5) On submission by such society or as the case may be, the Company 
+or the a",29.93
+5,What duties does a promoter have under the Real Estate Regulation Act?,property,5,0.68508,property,PROP_001,19,PROP_001:p19:c1,"19 
+ 
+promoter shall be liable to the consequences of breach or delay, as the case may be, as provided under this 
+Act or the rules and regulations made thereunder.  
+16. Obligations of promoter regarding ins urance of real estate project .—(1) The p",29.93
+6,What are the rules governing apartment ownership in Maharashtra?,property,1,0.82817,property,PROP_004,4,PROP_004:p4:c1,"2 Maharashtra Apartment Ownership Act, 1970 [1971 : Mah. XV
+1[Provided further that the sole owner or all the owners of the land may submit such
+land to the provisions of this Act with a condition that he or they shall grant a lease of
+such  land to ",22.17
+6,What are the rules governing apartment ownership in Maharashtra?,property,2,0.78797,property,PROP_004,3,PROP_004:p3:c4,"apartment in
+a building and to make such apartment heritable and transferable property, and to provide
+for matters connected with the purposes aforesaid ; It is hereby enacted in the Twenty-
+first Year of the Republic of India as follows :—
+1. (1) Th",22.17
+6,What are the rules governing apartment ownership in Maharashtra?,property,3,0.78351,property,PROP_004,21,PROP_004:p21:c2,"of the Maharashtra Apartment Ownership
+(Amendment) Act, 2023 (Mah. Act No. III of 2024) , is hereby published under
+the authority of the Governor.
+By order and in the name of the Governor of Maharashtra,
+SATISH WAGHOLE,
+Secretary (Legislation) to Gov",22.17
+6,What are the rules governing apartment ownership in Maharashtra?,property,4,0.76497,rental,RENT_001,33,RENT_001:p33:c1,"2000 : Mah. XVIII] The Maharashtra Rent Control Act, 1999 29
+48. (1) In respect of recovery of possession by a landlord referred to
+in clause ( b) or ( c) of section 41 in pursuance of an order of the Competent
+Authority, the provisions of section 18",22.17
+6,What are the rules governing apartment ownership in Maharashtra?,property,5,0.7576,property,PROP_004,14,PROP_004:p14:c1,"12 [1971 : Mah. XVMaharashtra Apartment Ownership Act, 1970
+SCHEDULE.
+(See section 27)
+Number and
+year of Subject or title Extent of amendment
+enactment
+1 2 3
+1* * * * *
+Mah. XLV of 1963. The        Maharashtra (1) In section 2—
+Ownership      Flats ",22.17
+7,What are grounds for divorce under the Hindu Marriage Act?,divorce,1,0.77838,divorce,DIV_001,5,DIV_001:p5:c1,"5 
+ 
+THE HINDU MARRIAGE ACT, 1955 
+ACT NO. 25 OF 19551 
+[18th May, 1955.] 
+An act to amend and codify the law relating to marriage among Hindus. 
+BE it enacted by Parliament in the Sixth Year of the Republic of India as follows:— 
+PRELIMINARY 
+1. Sho",23.56
+7,What are grounds for divorce under the Hindu Marriage Act?,divorce,2,0.75716,divorce,DIV_001,1,DIV_001:p1:c1,"1 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+The Hindu Marriage Act, 1955 
+(ACT NO. 25 OF 1955) 
+[As on the 15th April, 2026] 
+ 
+  
+IndiaCode",23.56
+7,What are grounds for divorce under the Hindu Marriage Act?,divorce,3,0.75624,divorce,DIV_001,6,DIV_001:p6:c4,"ained in this Act. 
+HINDU MARRIAGES 
+5. Conditions for a Hindu marriage .—A marriage may be solemnized between any two Hindus, if 
+the following conditions are fulfilled, namely:— 
+(i) neither party has a spouse living at the time of the marriage; 
+1",23.56
+7,What are grounds for divorce under the Hindu Marriage Act?,divorce,4,0.73152,divorce,DIV_002,13,DIV_002:p13:c3,"*  
+7 *    *    *    *    *  
+8 [( 1A ) A wife may also present a petition for divorce to the district court on the ground, ―  
+( i ) that her husband has, since the solemnization of the marriage, been guilty of rape, sodomy or 
+bestiality;  
+( ii ) ",23.56
+7,What are grounds for divorce under the Hindu Marriage Act?,divorce,5,0.70886,divorce,DIV_002,11,DIV_002:p11:c1,"11  
+ 
+certain communities, succession to t he property or any person whose marriage is solemnized under this 
+Act and to the property of the issue of such marriage shall be regulated by the provisions of the said Act 
+and for the purposes of this Ac",23.56
+8,What is the jurisdiction of family courts in matrimonial matters?,divorce,1,0.6988,divorce,DIV_003,2,DIV_003:p2:c1,"2 
+ 
+THE FAMILY COURTS ACT, 1984 
+ACT NO. 66 OF 1984 
+[14th September, 1984.] 
+An Act to provide for the establishment of Family Courts with a view to promote conciliation in, 
+and secure speedy settlement of , disputes relating to marriage and famil",26.98
+8,What is the jurisdiction of family courts in matrimonial matters?,divorce,2,0.68916,divorce,DIV_003,5,DIV_003:p5:c3,"istrate under the said Code; and 
+(ii) which wou ld have been required to be instituted or taken before such Family Court if, 
+before the date on which such suit or proceeding was instituted or taken, this Act had come into 
+force and such Family Cou",26.98
+8,What is the jurisdiction of family courts in matrimonial matters?,divorce,3,0.66483,divorce,DIV_001,5,DIV_001:p5:c4,"the family; 
+(b) “district court” means, in any area for which there is a city civil court, that court, and i n any 
+other area the principal civil court of original jurisdiction, and includes any other civil court which 
+ 
+1. The Act has been extend",26.98
+8,What is the jurisdiction of family courts in matrimonial matters?,divorce,4,0.66451,divorce,DIV_003,5,DIV_003:p5:c2,"oceedings .—Where a Family Court has been 
+established for any area,— 
+(a) no district court or any subordinate civil court referred to in sub -section (1) of section 7 shall, 
+in relation to such area, have or exercise any jurisdiction in respect of",26.98
+8,What is the jurisdiction of family courts in matrimonial matters?,divorce,5,0.66205,divorce,DIV_002,14,DIV_002:p14:c5,"t court shall have regard to the 
+interests of any children of the marriage, and to the question whether there is a reasonable probability of a 
+reconciliation between the parties before the expiration of the  9 [said one y ear].  
+                  ",26.98
