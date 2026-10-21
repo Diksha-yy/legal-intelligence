@@ -16,6 +16,7 @@
   - All 5 prioritized screens operational: Document Upload, AI Analysis Results, Risk & Fairness Dashboard, Legal AI Chat, Document Comparison.
   - Downloadable Reports: Plaintext and formatted audit export.
   - Static SPA serving: FastAPI serves the built React frontend (`frontend/dist`) directly at `http://localhost:8000/`.
+  - Timeout & CPU Latency Fixes: Extended API client timeouts to 300 seconds and polling limit to 120 attempts, eliminating premature "time expired" errors during BART/NLLB CPU inference. Added one-click "Run Full AI Pipeline" button on the Analysis page.
 - **Firebase Integration**:
   - `app/core/firebase_backend.py` with Firebase ID token verification, Firestore document/history sync, and Firebase Cloud Storage.
   - Built-in resilient local fallback (SQLite + signed JWT + local file storage) ensuring full functionality without external cloud dependencies.
