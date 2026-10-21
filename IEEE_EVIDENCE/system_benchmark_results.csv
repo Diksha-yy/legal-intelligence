@@ -1,0 +1,28 @@
+Module,Metric,Value,Unit,Status,Notes
+M1_OCR,Page Count,3,pages,PASS,PDF: rent-agreement.pdf
+M1_OCR,Extracted Characters,5272,chars,PASS,850 words
+M1_OCR,Processing Latency,0.04246530000818893,seconds,PASS,0.0142 s/page
+M2_Classification,Domain Detected,rental,domain,PASS,Rental agreement
+M2_Classification,Clauses Classified,47,clauses,PASS,Total classified clauses
+M2_Classification,Execution Latency,23.55628219997743,seconds,PASS,501.20 ms/clause
+M3_Summarizer,Summary Chars,231,chars,PASS,Chunks: 1
+M3_Summarizer,Inference Latency,26.81339769999613,seconds,PASS,Model: facebook/bart-large-cnn
+M4_Translation_Hindi,Translation Length,90,chars,PASS,Devnagari Hindi output
+M4_Translation_Hindi,Inference Latency,28.797836999990977,seconds,PASS,facebook/nllb-200
+M4_Translation_Marathi,Translation Length,85,chars,PASS,Devnagari Marathi output
+M4_Translation_Marathi,Inference Latency,15.049011300026905,seconds,PASS,facebook/nllb-200
+M5_Missing_Clauses,Detected Clauses,0,clauses,PASS,Found 0 mandatory clauses
+M5_Missing_Clauses,Flagged Missing,8,clauses,PASS,Flagged 8 missing clauses
+M5_Missing_Clauses,Execution Latency,0.059953899995889515,seconds,PASS,59.95 ms
+M6_Risk_Scoring,Risk Score,85,score (0-100),PASS,Band: Higher screening score
+M6_Risk_Scoring,Risk Findings,9,findings,PASS,Penalty rule findings
+M6_Risk_Scoring,Execution Latency,0.05721060000360012,seconds,PASS,57.21 ms
+M7_Fairness,Fairness Score,78,score (0-100),PASS,Asymmetry evaluation
+M7_Fairness,Execution Latency,0.00299719997565262,seconds,PASS,3.00 ms
+M8_Legal_RAG,Citations Retrieved,5,citations,PASS,Top 5 relevant statutory chunks
+M8_Legal_RAG,Retrieval Latency,17.843342100008158,seconds,PASS,17843.34 ms (Embedding + FAISS Search)
+M8_Legal_RAG,Top Citation Law,LAW_001,law_id,PASS,"Page: 34, Sim: 0.801"
+M9_Comparison,Clauses Compared,20,clauses,PASS,Pairwise clause matching
+M9_Comparison,Modified Clauses,0,clauses,PASS,Numerical/wording deltas
+M9_Comparison,Comparison Latency,0.4094813999836333,seconds,PASS,409.48 ms
+System_Report,Localization Latency,126.63657529998454,seconds,PASS,English to Hindi report translation

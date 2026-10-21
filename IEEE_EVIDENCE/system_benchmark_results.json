@@ -1,0 +1,221 @@
+{
+  "timestamp": "2026-10-21T02:23:08Z",
+  "results": [
+    {
+      "Module": "M1_OCR",
+      "Metric": "Page Count",
+      "Value": 3,
+      "Unit": "pages",
+      "Status": "PASS",
+      "Notes": "PDF: rent-agreement.pdf"
+    },
+    {
+      "Module": "M1_OCR",
+      "Metric": "Extracted Characters",
+      "Value": 5272,
+      "Unit": "chars",
+      "Status": "PASS",
+      "Notes": "850 words"
+    },
+    {
+      "Module": "M1_OCR",
+      "Metric": "Processing Latency",
+      "Value": 0.04246530000818893,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "0.0142 s/page"
+    },
+    {
+      "Module": "M2_Classification",
+      "Metric": "Domain Detected",
+      "Value": "rental",
+      "Unit": "domain",
+      "Status": "PASS",
+      "Notes": "Rental agreement"
+    },
+    {
+      "Module": "M2_Classification",
+      "Metric": "Clauses Classified",
+      "Value": 47,
+      "Unit": "clauses",
+      "Status": "PASS",
+      "Notes": "Total classified clauses"
+    },
+    {
+      "Module": "M2_Classification",
+      "Metric": "Execution Latency",
+      "Value": 23.55628219997743,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "501.20 ms/clause"
+    },
+    {
+      "Module": "M3_Summarizer",
+      "Metric": "Summary Chars",
+      "Value": 231,
+      "Unit": "chars",
+      "Status": "PASS",
+      "Notes": "Chunks: 1"
+    },
+    {
+      "Module": "M3_Summarizer",
+      "Metric": "Inference Latency",
+      "Value": 26.81339769999613,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "Model: facebook/bart-large-cnn"
+    },
+    {
+      "Module": "M4_Translation_Hindi",
+      "Metric": "Translation Length",
+      "Value": 90,
+      "Unit": "chars",
+      "Status": "PASS",
+      "Notes": "Devnagari Hindi output"
+    },
+    {
+      "Module": "M4_Translation_Hindi",
+      "Metric": "Inference Latency",
+      "Value": 28.797836999990977,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "facebook/nllb-200"
+    },
+    {
+      "Module": "M4_Translation_Marathi",
+      "Metric": "Translation Length",
+      "Value": 85,
+      "Unit": "chars",
+      "Status": "PASS",
+      "Notes": "Devnagari Marathi output"
+    },
+    {
+      "Module": "M4_Translation_Marathi",
+      "Metric": "Inference Latency",
+      "Value": 15.049011300026905,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "facebook/nllb-200"
+    },
+    {
+      "Module": "M5_Missing_Clauses",
+      "Metric": "Detected Clauses",
+      "Value": 0,
+      "Unit": "clauses",
+      "Status": "PASS",
+      "Notes": "Found 0 mandatory clauses"
+    },
+    {
+      "Module": "M5_Missing_Clauses",
+      "Metric": "Flagged Missing",
+      "Value": 8,
+      "Unit": "clauses",
+      "Status": "PASS",
+      "Notes": "Flagged 8 missing clauses"
+    },
+    {
+      "Module": "M5_Missing_Clauses",
+      "Metric": "Execution Latency",
+      "Value": 0.059953899995889515,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "59.95 ms"
+    },
+    {
+      "Module": "M6_Risk_Scoring",
+      "Metric": "Risk Score",
+      "Value": 85,
+      "Unit": "score (0-100)",
+      "Status": "PASS",
+      "Notes": "Band: Higher screening score"
+    },
+    {
+      "Module": "M6_Risk_Scoring",
+      "Metric": "Risk Findings",
+      "Value": 9,
+      "Unit": "findings",
+      "Status": "PASS",
+      "Notes": "Penalty rule findings"
+    },
+    {
+      "Module": "M6_Risk_Scoring",
+      "Metric": "Execution Latency",
+      "Value": 0.05721060000360012,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "57.21 ms"
+    },
+    {
+      "Module": "M7_Fairness",
+      "Metric": "Fairness Score",
+      "Value": 78,
+      "Unit": "score (0-100)",
+      "Status": "PASS",
+      "Notes": "Asymmetry evaluation"
+    },
+    {
+      "Module": "M7_Fairness",
+      "Metric": "Execution Latency",
+      "Value": 0.00299719997565262,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "3.00 ms"
+    },
+    {
+      "Module": "M8_Legal_RAG",
+      "Metric": "Citations Retrieved",
+      "Value": 5,
+      "Unit": "citations",
+      "Status": "PASS",
+      "Notes": "Top 5 relevant statutory chunks"
+    },
+    {
+      "Module": "M8_Legal_RAG",
+      "Metric": "Retrieval Latency",
+      "Value": 17.843342100008158,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "17843.34 ms (Embedding + FAISS Search)"
+    },
+    {
+      "Module": "M8_Legal_RAG",
+      "Metric": "Top Citation Law",
+      "Value": "LAW_001",
+      "Unit": "law_id",
+      "Status": "PASS",
+      "Notes": "Page: 34, Sim: 0.801"
+    },
+    {
+      "Module": "M9_Comparison",
+      "Metric": "Clauses Compared",
+      "Value": 20,
+      "Unit": "clauses",
+      "Status": "PASS",
+      "Notes": "Pairwise clause matching"
+    },
+    {
+      "Module": "M9_Comparison",
+      "Metric": "Modified Clauses",
+      "Value": 0,
+      "Unit": "clauses",
+      "Status": "PASS",
+      "Notes": "Numerical/wording deltas"
+    },
+    {
+      "Module": "M9_Comparison",
+      "Metric": "Comparison Latency",
+      "Value": 0.4094813999836333,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "409.48 ms"
+    },
+    {
+      "Module": "System_Report",
+      "Metric": "Localization Latency",
+      "Value": 126.63657529998454,
+      "Unit": "seconds",
+      "Status": "PASS",
+      "Notes": "English to Hindi report translation"
+    }
+  ]
+}

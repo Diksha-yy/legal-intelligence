@@ -157,8 +157,13 @@ def extract_text_from_path(path):
     return text
 
 
+frontend_dist = Path(__file__).resolve().parents[1] / "frontend" / "dist"
+
 @app.get("/")
 def home():
+    index_file = frontend_dist / "index.html"
+    if index_file.is_file():
+        return FileResponse(index_file)
     return {
         "service": "Legal Intelligence AI Service",
         "status": "running",
