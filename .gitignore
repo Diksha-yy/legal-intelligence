@@ -10,6 +10,17 @@ __pycache__/
 
 # Databases & local stores
 data/uploads/
+data/external_datasets/
+legal_law_collector/downloads/
+legal_law_collector/processed/
+data/training/*.csv
+*.bak
+data/employment/*.pdf
+!data/employment/Employment-Contract-Template.pdf
+data/legal_knowledge/official_documents/*.pdf
+!data/legal_knowledge/official_documents/rent-agreement.pdf
+!data/legal_knowledge/official_documents/Rent deed Lease Agreement.pdf
+data/legal_knowledge/official_documents/*.doc*
 *.db
 *.sqlite
 *.sqlite3
