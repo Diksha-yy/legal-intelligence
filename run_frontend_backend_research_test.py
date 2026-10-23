@@ -56,20 +56,25 @@ def test_frontend_assets(session):
     log_step("Frontend: SPA Root", "/", "GET", r.status_code, lat, r.status_code == 200 and has_html,
              f"{len(r.content)} bytes", "React SPA HTML root delivered", "HTML_Delivered", 1 if has_html else 0)
 
-    # 2. Main JavaScript Bundle
+    # 2. Main JavaScript Bundle (Dynamically found from index.html)
+    import re
+    js_match = re.search(r'src="(/assets/[^"]+\.js)"', r.text)
+    js_path = js_match.group(1) if js_match else "/assets/index-BgQwvECn.js"
     t0 = time.perf_counter()
-    r_js = session.get(f"{BASE_URL}/assets/index-CC2ZfwOG.js")
+    r_js = session.get(f"{BASE_URL}{js_path}")
     lat = (time.perf_counter() - t0) * 1000
     is_js = r_js.status_code == 200 and len(r_js.content) > 100000
-    log_step("Frontend: JS Bundle", "/assets/index-CC2ZfwOG.js", "GET", r_js.status_code, lat, is_js,
+    log_step("Frontend: JS Bundle", js_path, "GET", r_js.status_code, lat, is_js,
              f"{len(r_js.content)} bytes", f"Vite Production JS Bundle ({len(r_js.content)/1024:.1f} KB)", "Bundle_Size_KB", round(len(r_js.content)/1024, 1))
 
-    # 3. Main CSS Bundle
+    # 3. Main CSS Bundle (Dynamically found from index.html)
+    css_match = re.search(r'href="(/assets/[^"]+\.css)"', r.text)
+    css_path = css_match.group(1) if css_match else "/assets/index-Dyz-H_03.css"
     t0 = time.perf_counter()
-    r_css = session.get(f"{BASE_URL}/assets/index-DcVJdF7X.css")
+    r_css = session.get(f"{BASE_URL}{css_path}")
     lat = (time.perf_counter() - t0) * 1000
     is_css = r_css.status_code == 200 and len(r_css.content) > 10000
-    log_step("Frontend: CSS Bundle", "/assets/index-DcVJdF7X.css", "GET", r_css.status_code, lat, is_css,
+    log_step("Frontend: CSS Bundle", css_path, "GET", r_css.status_code, lat, is_css,
              f"{len(r_css.content)} bytes", f"Tailwind CSS Bundle ({len(r_css.content)/1024:.1f} KB)", "CSS_Size_KB", round(len(r_css.content)/1024, 1))
 
     # 4. Client-side Navigation Routes (Dashboard, Upload, Chat, Compare, Reports)
@@ -187,39 +192,63 @@ def test_document_pipeline(session, file_path, doc_label, doc_type="employment")
     log_step("M2: Classification", f"/api/clauses/classify/{doc_id}", "POST", r_class.status_code, lat, class_ok,
              f"{word_len} words", f"Detected {clause_count} clauses (avg conf: {avg_conf:.2%})", "Detected_Clause_Count", clause_count)
 
-    # 4. M3: BART Summarization
+    # 4. M3: BART Summarization (Plural & Singular endpoints)
     t0 = time.perf_counter()
-    r_sum = session.post(f"{BASE_URL}/api/summaries/generate/{doc_id}")
+    r_sum = session.post(f"{BASE_URL}/api/summary/generate/{doc_id}")
     lat = (time.perf_counter() - t0) * 1000
     sum_data = r_sum.json() if r_sum.status_code == 200 else {}
     sum_text = sum_data.get("summary", "")
     sum_ok = r_sum.status_code == 200 and len(sum_text) > 30
     compression_ratio = round((1.0 - (len(sum_text.split()) / max(word_len, 1))) * 100, 1)
-    log_step("M3: BART Summary", f"/api/summaries/generate/{doc_id}", "POST", r_sum.status_code, lat, sum_ok,
+    log_step("M3: BART Summary (Singular)", f"/api/summary/generate/{doc_id}", "POST", r_sum.status_code, lat, sum_ok,
              f"{word_len} words", f"Summary: {len(sum_text.split())} words (-{compression_ratio}%)", "Compression_Ratio_Pct", compression_ratio)
 
-    # 5. M6: Risk Assessment
+    # 4b. Verify GET Summary (Frontend format)
     t0 = time.perf_counter()
-    r_risk = session.post(f"{BASE_URL}/api/risk-scores/analyze/{doc_id}")
+    r_get_sum = session.get(f"{BASE_URL}/api/summary/{doc_id}")
+    lat_get_sum = (time.perf_counter() - t0) * 1000
+    get_sum_ok = r_get_sum.status_code == 200 and "summary" in r_get_sum.json()
+    log_step("M3: GET Summary", f"/api/summary/{doc_id}", "GET", r_get_sum.status_code, lat_get_sum, get_sum_ok,
+             f"Doc ID: {doc_id}", "Retrieved generated summary", "Summary_Retrieved", 1 if get_sum_ok else 0)
+
+    # 5. M6: Risk Assessment (Plural & Singular endpoints)
+    t0 = time.perf_counter()
+    r_risk = session.post(f"{BASE_URL}/api/risk-score/analyze/{doc_id}")
     lat = (time.perf_counter() - t0) * 1000
     risk_data = r_risk.json() if r_risk.status_code == 200 else {}
     risk_score = risk_data.get("riskScore", 0)
     risk_level = risk_data.get("riskLevel", "UNKNOWN")
     risk_ok = r_risk.status_code == 200 and "riskScore" in risk_data
     findings_count = len(risk_data.get("findings", []))
-    log_step("M6: Risk Scoring", f"/api/risk-scores/analyze/{doc_id}", "POST", r_risk.status_code, lat, risk_ok,
+    log_step("M6: Risk Scoring (Singular)", f"/api/risk-score/analyze/{doc_id}", "POST", r_risk.status_code, lat, risk_ok,
              f"{clause_count} clauses", f"Score: {risk_score}/100 ({risk_level}), {findings_count} findings", "Risk_Score", risk_score)
 
-    # 6. M7: Fairness Assessment
+    # 5b. Verify GET Risk Score (Frontend format)
     t0 = time.perf_counter()
-    r_fair = session.post(f"{BASE_URL}/api/fairness-scores/analyze/{doc_id}")
+    r_get_risk = session.get(f"{BASE_URL}/api/risk-score/{doc_id}")
+    lat_get_risk = (time.perf_counter() - t0) * 1000
+    get_risk_ok = r_get_risk.status_code == 200 and "riskScore" in r_get_risk.json()
+    log_step("M6: GET Risk Score", f"/api/risk-score/{doc_id}", "GET", r_get_risk.status_code, lat_get_risk, get_risk_ok,
+             f"Doc ID: {doc_id}", f"Score: {risk_score}/100 verified", "Risk_Retrieved", 1 if get_risk_ok else 0)
+
+    # 6. M7: Fairness Assessment (Plural & Singular endpoints)
+    t0 = time.perf_counter()
+    r_fair = session.post(f"{BASE_URL}/api/fairness/analyze/{doc_id}")
     lat = (time.perf_counter() - t0) * 1000
     fair_data = r_fair.json() if r_fair.status_code == 200 else {}
     fair_score = fair_data.get("fairnessScore", 0)
     fair_level = fair_data.get("fairnessLevel", "UNKNOWN")
     fair_ok = r_fair.status_code == 200 and "fairnessScore" in fair_data
-    log_step("M7: Fairness Analysis", f"/api/fairness-scores/analyze/{doc_id}", "POST", r_fair.status_code, lat, fair_ok,
+    log_step("M7: Fairness Analysis (Singular)", f"/api/fairness/analyze/{doc_id}", "POST", r_fair.status_code, lat, fair_ok,
              f"{clause_count} clauses", f"Score: {fair_score}/100 ({fair_level})", "Fairness_Score", fair_score)
+
+    # 6b. Verify GET Fairness Score (Frontend format)
+    t0 = time.perf_counter()
+    r_get_fair = session.get(f"{BASE_URL}/api/fairness/{doc_id}")
+    lat_get_fair = (time.perf_counter() - t0) * 1000
+    get_fair_ok = r_get_fair.status_code == 200 and "fairnessScore" in r_get_fair.json()
+    log_step("M7: GET Fairness Score", f"/api/fairness/{doc_id}", "GET", r_get_fair.status_code, lat_get_fair, get_fair_ok,
+             f"Doc ID: {doc_id}", f"Score: {fair_score}/100 verified", "Fairness_Retrieved", 1 if get_fair_ok else 0)
 
     # 7. M5: Missing Clause Detection
     t0 = time.perf_counter()
@@ -249,7 +278,7 @@ def test_document_pipeline(session, file_path, doc_label, doc_type="employment")
         log_step(f"M8: RAG Query {q_idx}", f"/api/qa/{doc_id}", "POST", r_qa.status_code, lat, qa_ok,
                  q[:35] + "...", f"Conf: {conf:.2f} | Ans: {ans[:35]}...", "RAG_Confidence", conf)
 
-    # 9. M4: Multilingual Translation (Hindi & Marathi)
+    # 9. M4: Multilingual Translation (Hindi & Marathi + Caching Benchmark)
     for lang_code, lang_name in [("hi", "Hindi"), ("mr", "Marathi")]:
         t0 = time.perf_counter()
         r_trans = session.post(f"{BASE_URL}/api/translation/generate/{doc_id}", params={"sourceLanguage": "en", "targetLanguage": lang_code})
@@ -260,7 +289,23 @@ def test_document_pipeline(session, file_path, doc_label, doc_type="employment")
         log_step(f"M4: Translation ({lang_name})", f"/api/translation/generate/{doc_id}", "POST", r_trans.status_code, lat, trans_ok,
                  f"{len(sum_text)} chars (summary)", f"{lang_name} ({len(t_text)} chars): {t_text[:30]}...", f"Translation_Len_{lang_code.upper()}", len(t_text))
 
-    # 10. Downloadable Audit Report
+        # Test cached retrieval speedup
+        t0_cached = time.perf_counter()
+        r_cached = session.get(f"{BASE_URL}/api/translation/{doc_id}")
+        lat_cached = (time.perf_counter() - t0_cached) * 1000
+        cached_ok = r_cached.status_code == 200 and len(r_cached.json().get("translatedText", "")) > 10
+        log_step(f"M4: Cached Read ({lang_name})", f"/api/translation/{doc_id}", "GET", r_cached.status_code, lat_cached, cached_ok,
+                 f"Doc ID: {doc_id}", f"Cache hit in {lat_cached:.2f} ms", f"Cache_Latency_{lang_code.upper()}_ms", round(lat_cached, 2))
+
+    # 10. Document Download (Frontend format)
+    t0 = time.perf_counter()
+    r_dl = session.get(f"{BASE_URL}/api/documents/{doc_id}/download")
+    lat_dl = (time.perf_counter() - t0) * 1000
+    dl_ok = r_dl.status_code == 200 and len(r_dl.content) > 1000
+    log_step("Document: Download", f"/api/documents/{doc_id}/download", "GET", r_dl.status_code, lat_dl, dl_ok,
+             f"{len(r_dl.content)} bytes", "PDF binary downloaded successfully", "Downloaded_Bytes", len(r_dl.content))
+
+    # 11. Downloadable Audit Report
     t0 = time.perf_counter()
     r_rep = session.get(f"{BASE_URL}/api/reports/download/{doc_id}")
     lat = (time.perf_counter() - t0) * 1000

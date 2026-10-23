@@ -265,6 +265,7 @@ def api_delete_document(document_id: int):
 
 
 @router.get("/api/documents/download/{document_id}")
+@router.get("/api/documents/{document_id}/download")
 def api_download_document(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -447,6 +448,7 @@ def api_get_clause_by_id(clause_id: int):
 # ─── SUMMARIZATION (M3) ────────────────────────────────────────────────────────
 
 @router.post("/api/summaries/generate/{document_id}")
+@router.post("/api/summary/generate/{document_id}")
 def api_generate_summary(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -490,6 +492,9 @@ def api_generate_summary(document_id: int):
 
 
 @router.get("/api/summaries/document/{document_id}")
+@router.get("/api/summaries/{document_id}")
+@router.get("/api/summary/{document_id}")
+@router.get("/api/summary/document/{document_id}")
 def api_get_summary(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -511,6 +516,7 @@ def api_get_summary(document_id: int):
 # ─── RISK SCORING (M6) ─────────────────────────────────────────────────────────
 
 @router.post("/api/risk-scores/analyze/{document_id}")
+@router.post("/api/risk-score/analyze/{document_id}")
 def api_analyze_risk(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -562,6 +568,9 @@ def api_analyze_risk(document_id: int):
 
 
 @router.get("/api/risk-scores/document/{document_id}")
+@router.get("/api/risk-scores/{document_id}")
+@router.get("/api/risk-score/{document_id}")
+@router.get("/api/risk-score/document/{document_id}")
 def api_get_risk_score(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -584,6 +593,8 @@ def api_get_risk_score(document_id: int):
 # ─── FAIRNESS SCORING (M7) ─────────────────────────────────────────────────────
 
 @router.post("/api/fairness-scores/analyze/{document_id}")
+@router.post("/api/fairness/analyze/{document_id}")
+@router.post("/api/fairness-score/analyze/{document_id}")
 def api_analyze_fairness(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -633,6 +644,10 @@ def api_analyze_fairness(document_id: int):
 
 
 @router.get("/api/fairness-scores/document/{document_id}")
+@router.get("/api/fairness-scores/{document_id}")
+@router.get("/api/fairness/{document_id}")
+@router.get("/api/fairness/document/{document_id}")
+@router.get("/api/fairness-score/{document_id}")
 def api_get_fairness_score(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()
@@ -655,13 +670,19 @@ def api_get_fairness_score(document_id: int):
 # ─── MISSING CLAUSES (M5) ──────────────────────────────────────────────────────
 
 @router.get("/api/missing-clauses/check")
+@router.get("/api/missing-clause/check")
 def api_check_missing_clauses(
-    documentId: int = Query(...),
-    documentTypeId: Optional[str] = Query(None)
+    documentId: Optional[int] = Query(None),
+    documentTypeId: Optional[str] = Query(None),
+    document_id: Optional[int] = Query(None)
 ):
+    target_id = documentId or document_id
+    if not target_id:
+        raise HTTPException(status_code=400, detail="documentId query parameter is required.")
+
     conn = get_sqlite_conn()
     cur = conn.cursor()
-    cur.execute("SELECT extracted_text, document_type FROM documents WHERE id = ?", (documentId,))
+    cur.execute("SELECT extracted_text, document_type FROM documents WHERE id = ?", (target_id,))
     doc = cur.fetchone()
     conn.close()
     if not doc or not doc["extracted_text"]:
@@ -681,11 +702,13 @@ def api_check_missing_clauses(
         detected = res.get("detected_clauses", [])
         missing = res.get("potentially_missing_clauses", [])
         return {
-            "documentId": documentId,
+            "documentId": target_id,
             "documentType": domain,
             "detectedClauses": detected,
             "potentiallyMissingClauses": missing,
-            "missingClauses": missing
+            "missingClauses": missing,
+            "missingCount": len(missing),
+            "totalMandatoryClauses": len(detected) + len(missing)
         }
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Missing clause detection error: {exc}")
@@ -800,18 +823,39 @@ def api_clear_qa_history(document_id: int):
 # ─── TRANSLATION (M4) ──────────────────────────────────────────────────────────
 
 @router.post("/api/translation/generate/{document_id}")
+@router.post("/api/translations/generate/{document_id}")
 def api_generate_translation(
     document_id: int,
     sourceLanguage: str = Query("en"),
-    targetLanguage: str = Query("hi")
+    targetLanguage: str = Query("hi"),
+    force: bool = Query(False)
 ):
     conn = get_sqlite_conn()
     cur = conn.cursor()
+
+    target_lang_title = "Hindi" if targetLanguage.lower() in {"hi", "hindi"} else ("Marathi" if targetLanguage.lower() in {"mr", "marathi"} else "Hindi")
+
+    if not force:
+        cur.execute(
+            "SELECT * FROM translations WHERE document_id = ? AND target_language = ? ORDER BY id DESC LIMIT 1",
+            (document_id, target_lang_title)
+        )
+        existing = cur.fetchone()
+        if existing and existing["translated_text"]:
+            conn.close()
+            return {
+                "id": existing["id"],
+                "documentId": existing["document_id"],
+                "sourceLanguage": existing["source_language"],
+                "targetLanguage": existing["target_language"],
+                "translatedText": existing["translated_text"]
+            }
+
     cur.execute("SELECT summary FROM summaries WHERE document_id = ?", (document_id,))
     sum_row = cur.fetchone()
 
     if not sum_row or not sum_row["summary"]:
-        # Fall back to first 300 words of document extracted text
+        # Fall back to first 150 words of document extracted text
         cur.execute("SELECT extracted_text FROM documents WHERE id = ?", (document_id,))
         doc_row = cur.fetchone()
         if not doc_row or not doc_row["extracted_text"]:
@@ -821,13 +865,12 @@ def api_generate_translation(
     else:
         text_to_translate = sum_row["summary"]
 
-    target_lang_title = "Hindi" if targetLanguage.lower() in {"hi", "hindi"} else ("Marathi" if targetLanguage.lower() in {"mr", "marathi"} else "Hindi")
     try:
         t_res = translate_text(text_to_translate, target_language=target_lang_title)
         translated_text = t_res.get("translated_text", "")
         now = datetime.now(timezone.utc).isoformat()
 
-        cur.execute("DELETE FROM translations WHERE document_id = ?", (document_id,))
+        cur.execute("DELETE FROM translations WHERE document_id = ? AND target_language = ?", (document_id, target_lang_title))
         cur.execute(
             """
             INSERT INTO translations (document_id, source_language, target_language, translated_text, created_at)
@@ -852,6 +895,9 @@ def api_generate_translation(
 
 
 @router.get("/api/translation/{document_id}")
+@router.get("/api/translations/{document_id}")
+@router.get("/api/translations/document/{document_id}")
+@router.get("/api/translation/document/{document_id}")
 def api_get_translation(document_id: int):
     conn = get_sqlite_conn()
     cur = conn.cursor()

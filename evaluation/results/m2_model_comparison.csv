@@ -1,4 +1,4 @@
 ﻿model,samples,accuracy,macro_precision,macro_recall,macro_f1,total_seconds,mean_ms_per_clause,errors_or_unsupported,test_scope
-keyword,40,0.825,0.9318,0.825,0.8405,0.023,0.58,0,synthetic employment-only unless CSV independently expanded/reviewed
-semantic,40,0.875,0.9048,0.875,0.8681,14.867,371.67,0,synthetic employment-only unless CSV independently expanded/reviewed
-hybrid,40,0.875,0.9048,0.875,0.8681,0.63,15.76,0,synthetic employment-only unless CSV independently expanded/reviewed
+keyword,40,0.825,0.9318,0.825,0.8405,0.019,0.47,0,synthetic employment-only unless CSV independently expanded/reviewed
+semantic,40,0.875,0.9048,0.875,0.8681,6.369,159.22,0,synthetic employment-only unless CSV independently expanded/reviewed
+hybrid,40,0.875,0.9048,0.875,0.8681,0.471,11.77,0,synthetic employment-only unless CSV independently expanded/reviewed

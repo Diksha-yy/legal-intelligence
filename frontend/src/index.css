@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@import "tailwindcss";
+
+/*
+  Tailwind v4 reads design tokens from this @theme block directly —
+  it does NOT automatically read tailwind.config.js theme.extend anymore.
+  This is the single source of truth for every custom color used across
+  the app (bg-navy, text-royal, border-teal/40, etc. are all generated
+  from these variables, opacity modifiers included).
+*/
+@theme {
+  --color-primary: #102a43;
+  --color-secondary: #1e3a5f;
+  --color-accent: #3b82f6;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+
+  /* Shared design-system palette */
+  --color-navy: #0f172a;
+  --color-royal: #2563eb;
+  --color-teal: #14b8a6;
+  --color-brandgreen: #22c55e;
+  --color-amber: #f59e0b;
+  --color-danger: #ef4444;
+
+  --font-sans: "Inter", sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  background: #f8fafc;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid rgb(20 184 166 / 70%);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: #fff;
+  background: #2563eb;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

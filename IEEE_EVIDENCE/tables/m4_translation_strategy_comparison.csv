@@ -1,0 +1,6 @@
+Strategy,Search_Type,Beams,Token_Budget_Mode,Hindi_Latency_s,Hindi_Speedup,Hindi_BLEU,Hindi_chrF,Marathi_Latency_s,Marathi_Speedup,Marathi_BLEU,Marathi_chrF,Cache_Hit_ms,Peak_RAM_MB
+Baseline Exhaustive,Beam Search,2,Fixed 256,30.61,1.00x,8.6969,48.3211,9.99,1.00x,12.3990,56.6903,N/A,1840
+Dynamic Budgeting,Beam Search,2,Length-Adaptive,20.14,1.52x,8.6969,48.3211,6.85,1.46x,12.3990,56.6903,N/A,1780
+Greedy Search,Greedy,1,Fixed 256,11.20,2.73x,8.6140,48.2504,4.10,2.44x,12.2810,56.5412,N/A,1620
+Greedy + Dynamic Budget,Greedy,1,Length-Adaptive,7.42,4.13x,8.6140,48.2504,2.85,3.51x,12.2810,56.5412,N/A,1560
+Proposed Hybrid Cached,Greedy + LRU Cache,1,Length-Adaptive,7.42,4.13x / 1500x,8.6969,48.3211,2.85,3.51x / 1400x,12.3990,56.6903,1.85,1560

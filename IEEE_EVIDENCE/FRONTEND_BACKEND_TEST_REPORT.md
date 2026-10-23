@@ -1,9 +1,9 @@
 # IEEE Research Empirical Evaluation: Full-Stack Integration & AI Performance
 **Project**: Legal Intelligence AI — Contract Analysis, Multilingual Explanation & Statutory Retrieval  
-**Evaluation Date**: 2026-10-21 10:12:11 UTC  
+**Evaluation Date**: 2026-10-23 11:19:57 UTC  
 **Evaluation Target**: End-to-End System Integration (`http://localhost:8000/`)  
-**Overall System Pass Rate**: **100.00%** (41/41 test cases passed)  
-**Mean API Latency**: **8981.37 ms**  
+**Overall System Pass Rate**: **100.00%** (53/53 test cases passed)  
+**Mean API Latency**: **7851.06 ms**  
 
 ---
 
@@ -19,47 +19,59 @@ $$\text{Upload} \rightarrow \text{OCR (M1)} \rightarrow \text{Clause Classificat
 
 | Stage / Module | Endpoint | HTTP Method | Status | Latency (ms) | Success | Key Measured Metric |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Frontend: SPA Root** | `/` | GET | 200 | 2039.58 | PASS | HTML_Delivered: 1 |
-| **Frontend: JS Bundle** | `/assets/index-CC2ZfwOG.js` | GET | 200 | 17.70 | PASS | Bundle_Size_KB: 565.3 |
-| **Frontend: CSS Bundle** | `/assets/index-DcVJdF7X.css` | GET | 200 | 17.33 | PASS | CSS_Size_KB: 58.3 |
-| **Frontend: Route /dashboard** | `/dashboard` | GET | 200 | 9.11 | PASS | Route_Accessible: 1 |
-| **Frontend: Route /upload** | `/upload` | GET | 200 | 4.53 | PASS | Route_Accessible: 1 |
-| **Frontend: Route /chat** | `/chat` | GET | 200 | 5.26 | PASS | Route_Accessible: 1 |
-| **Frontend: Route /compare** | `/compare` | GET | 200 | 5.72 | PASS | Route_Accessible: 1 |
-| **Frontend: Route /reports** | `/reports` | GET | 200 | 5.90 | PASS | Route_Accessible: 1 |
-| **Auth: Registration** | `/api/users/register` | POST | 200 | 39.21 | PASS | User_Registered: 1 |
-| **Auth: Login** | `/api/auth/login` | POST | 200 | 9.88 | PASS | JWT_Token_Length: 261 |
-| **Auth: Protected Access** | `/api/documents` | GET | 200 | 14.76 | PASS | Existing_Doc_Count: 4 |
-| **Upload: Master Rental Agreement** | `/api/documents/upload` | POST | 200 | 38.05 | PASS | Uploaded_Doc_ID: 5 |
-| **M1: OCR Start** | `/api/ocr/start/5` | POST | 200 | 129.12 | PASS | OCR_Init_Success: 1 |
-| **M1: OCR Extraction** | `/api/ocr/5` | GET | 200 | 10.79 | PASS | Extracted_Word_Count: 850 |
-| **M2: Classification** | `/api/clauses/classify/5` | POST | 200 | 2106.06 | PASS | Detected_Clause_Count: 47 |
-| **M3: BART Summary** | `/api/summaries/generate/5` | POST | 200 | 38086.34 | PASS | Compression_Ratio_Pct: 91.9 |
-| **M6: Risk Scoring** | `/api/risk-scores/analyze/5` | POST | 200 | 64.79 | PASS | Risk_Score: 60.0 |
-| **M7: Fairness Analysis** | `/api/fairness-scores/analyze/5` | POST | 200 | 14.03 | PASS | Fairness_Score: 78.0 |
-| **M5: Missing Clauses** | `/api/missing-clauses/check` | GET | 200 | 36.53 | PASS | Missing_Clauses_Count: 8 |
-| **M8: RAG Query 1** | `/api/qa/5` | POST | 200 | 11486.70 | PASS | RAG_Confidence: 0.88 |
-| **M8: RAG Query 2** | `/api/qa/5` | POST | 200 | 8391.41 | PASS | RAG_Confidence: 0.88 |
-| **M8: RAG Query 3** | `/api/qa/5` | POST | 200 | 9957.75 | PASS | RAG_Confidence: 0.88 |
-| **M4: Translation (Hindi)** | `/api/translation/generate/5` | POST | 200 | 61092.08 | PASS | Translation_Len_HI: 469 |
-| **M4: Translation (Marathi)** | `/api/translation/generate/5` | POST | 200 | 46009.93 | PASS | Translation_Len_MR: 476 |
-| **Report: Plaintext Audit** | `/api/reports/download/5` | GET | 200 | 39.99 | PASS | Report_Char_Length: 7667 |
-| **Upload: Lease Deed Agreement** | `/api/documents/upload` | POST | 200 | 48.90 | PASS | Uploaded_Doc_ID: 6 |
-| **M1: OCR Start** | `/api/ocr/start/6` | POST | 200 | 206.81 | PASS | OCR_Init_Success: 1 |
-| **M1: OCR Extraction** | `/api/ocr/6` | GET | 200 | 7.31 | PASS | Extracted_Word_Count: 712 |
-| **M2: Classification** | `/api/clauses/classify/6` | POST | 200 | 1383.01 | PASS | Detected_Clause_Count: 41 |
-| **M3: BART Summary** | `/api/summaries/generate/6` | POST | 200 | 48699.60 | PASS | Compression_Ratio_Pct: 87.4 |
-| **M6: Risk Scoring** | `/api/risk-scores/analyze/6` | POST | 200 | 99.08 | PASS | Risk_Score: 60.0 |
-| **M7: Fairness Analysis** | `/api/fairness-scores/analyze/6` | POST | 200 | 16.54 | PASS | Fairness_Score: 78.0 |
-| **M5: Missing Clauses** | `/api/missing-clauses/check` | GET | 200 | 28.84 | PASS | Missing_Clauses_Count: 7 |
-| **M8: RAG Query 1** | `/api/qa/6` | POST | 200 | 22873.40 | PASS | RAG_Confidence: 0.88 |
-| **M8: RAG Query 2** | `/api/qa/6` | POST | 200 | 15702.42 | PASS | RAG_Confidence: 0.88 |
-| **M8: RAG Query 3** | `/api/qa/6` | POST | 200 | 7503.59 | PASS | RAG_Confidence: 0.88 |
-| **M4: Translation (Hindi)** | `/api/translation/generate/6` | POST | 200 | 48825.22 | PASS | Translation_Len_HI: 470 |
-| **M4: Translation (Marathi)** | `/api/translation/generate/6` | POST | 200 | 42607.04 | PASS | Translation_Len_MR: 422 |
-| **Report: Plaintext Audit** | `/api/reports/download/6` | GET | 200 | 86.19 | PASS | Report_Char_Length: 6724 |
-| **M9: Document Comparison** | `/api/agreement-comparison` | POST | 200 | 498.39 | PASS | Total_Compared_Clauses: 53 |
-| **M9: Comparison History** | `/api/agreement-comparison/history/5` | GET | 200 | 17.39 | PASS | Comparison_History_Count: 1 |
+| **Frontend: SPA Root** | `/` | GET | 200 | 2022.30 | PASS | HTML_Delivered: 1 |
+| **Frontend: JS Bundle** | `/assets/index-BgQwvECn.js` | GET | 200 | 9.02 | PASS | Bundle_Size_KB: 567.3 |
+| **Frontend: CSS Bundle** | `/assets/index-Dyz-H_03.css` | GET | 200 | 15.77 | PASS | CSS_Size_KB: 58.4 |
+| **Frontend: Route /dashboard** | `/dashboard` | GET | 200 | 5.94 | PASS | Route_Accessible: 1 |
+| **Frontend: Route /upload** | `/upload` | GET | 200 | 3.58 | PASS | Route_Accessible: 1 |
+| **Frontend: Route /chat** | `/chat` | GET | 200 | 3.18 | PASS | Route_Accessible: 1 |
+| **Frontend: Route /compare** | `/compare` | GET | 200 | 3.19 | PASS | Route_Accessible: 1 |
+| **Frontend: Route /reports** | `/reports` | GET | 200 | 5.99 | PASS | Route_Accessible: 1 |
+| **Auth: Registration** | `/api/users/register` | POST | 200 | 19.20 | PASS | User_Registered: 1 |
+| **Auth: Login** | `/api/auth/login` | POST | 200 | 6.60 | PASS | JWT_Token_Length: 261 |
+| **Auth: Protected Access** | `/api/documents` | GET | 200 | 8.11 | PASS | Existing_Doc_Count: 8 |
+| **Upload: Master Rental Agreement** | `/api/documents/upload` | POST | 200 | 41.26 | PASS | Uploaded_Doc_ID: 9 |
+| **M1: OCR Start** | `/api/ocr/start/9` | POST | 200 | 88.86 | PASS | OCR_Init_Success: 1 |
+| **M1: OCR Extraction** | `/api/ocr/9` | GET | 200 | 5.42 | PASS | Extracted_Word_Count: 850 |
+| **M2: Classification** | `/api/clauses/classify/9` | POST | 200 | 25610.19 | PASS | Detected_Clause_Count: 47 |
+| **M3: BART Summary (Singular)** | `/api/summary/generate/9` | POST | 200 | 42430.89 | PASS | Compression_Ratio_Pct: 91.9 |
+| **M3: GET Summary** | `/api/summary/9` | GET | 200 | 9.72 | PASS | Summary_Retrieved: 1 |
+| **M6: Risk Scoring (Singular)** | `/api/risk-score/analyze/9` | POST | 200 | 65.65 | PASS | Risk_Score: 60.0 |
+| **M6: GET Risk Score** | `/api/risk-score/9` | GET | 200 | 7.72 | PASS | Risk_Retrieved: 1 |
+| **M7: Fairness Analysis (Singular)** | `/api/fairness/analyze/9` | POST | 200 | 13.41 | PASS | Fairness_Score: 78.0 |
+| **M7: GET Fairness Score** | `/api/fairness/9` | GET | 200 | 5.28 | PASS | Fairness_Retrieved: 1 |
+| **M5: Missing Clauses** | `/api/missing-clauses/check` | GET | 200 | 25.80 | PASS | Missing_Clauses_Count: 8 |
+| **M8: RAG Query 1** | `/api/qa/9` | POST | 200 | 10575.52 | PASS | RAG_Confidence: 0.88 |
+| **M8: RAG Query 2** | `/api/qa/9` | POST | 200 | 7380.29 | PASS | RAG_Confidence: 0.88 |
+| **M8: RAG Query 3** | `/api/qa/9` | POST | 200 | 7274.81 | PASS | RAG_Confidence: 0.88 |
+| **M4: Translation (Hindi)** | `/api/translation/generate/9` | POST | 200 | 43181.19 | PASS | Translation_Len_HI: 434 |
+| **M4: Cached Read (Hindi)** | `/api/translation/9` | GET | 200 | 41.28 | PASS | Cache_Latency_HI_ms: 41.28 |
+| **M4: Translation (Marathi)** | `/api/translation/generate/9` | POST | 200 | 23143.45 | PASS | Translation_Len_MR: 372 |
+| **M4: Cached Read (Marathi)** | `/api/translation/9` | GET | 200 | 15.41 | PASS | Cache_Latency_MR_ms: 15.41 |
+| **Document: Download** | `/api/documents/9/download` | GET | 200 | 15.83 | PASS | Downloaded_Bytes: 9801 |
+| **Report: Plaintext Audit** | `/api/reports/download/9` | GET | 200 | 16.04 | PASS | Report_Char_Length: 7667 |
+| **Upload: Lease Deed Agreement** | `/api/documents/upload` | POST | 200 | 85.47 | PASS | Uploaded_Doc_ID: 10 |
+| **M1: OCR Start** | `/api/ocr/start/10` | POST | 200 | 132.15 | PASS | OCR_Init_Success: 1 |
+| **M1: OCR Extraction** | `/api/ocr/10` | GET | 200 | 4.71 | PASS | Extracted_Word_Count: 712 |
+| **M2: Classification** | `/api/clauses/classify/10` | POST | 200 | 1177.46 | PASS | Detected_Clause_Count: 41 |
+| **M3: BART Summary (Singular)** | `/api/summary/generate/10` | POST | 200 | 43087.42 | PASS | Compression_Ratio_Pct: 87.4 |
+| **M3: GET Summary** | `/api/summary/10` | GET | 200 | 23.64 | PASS | Summary_Retrieved: 1 |
+| **M6: Risk Scoring (Singular)** | `/api/risk-score/analyze/10` | POST | 200 | 76.88 | PASS | Risk_Score: 60.0 |
+| **M6: GET Risk Score** | `/api/risk-score/10` | GET | 200 | 7.60 | PASS | Risk_Retrieved: 1 |
+| **M7: Fairness Analysis (Singular)** | `/api/fairness/analyze/10` | POST | 200 | 13.30 | PASS | Fairness_Score: 78.0 |
+| **M7: GET Fairness Score** | `/api/fairness/10` | GET | 200 | 7.99 | PASS | Fairness_Retrieved: 1 |
+| **M5: Missing Clauses** | `/api/missing-clauses/check` | GET | 200 | 26.17 | PASS | Missing_Clauses_Count: 7 |
+| **M8: RAG Query 1** | `/api/qa/10` | POST | 200 | 45853.06 | PASS | RAG_Confidence: 0.88 |
+| **M8: RAG Query 2** | `/api/qa/10` | POST | 200 | 41285.04 | PASS | RAG_Confidence: 0.88 |
+| **M8: RAG Query 3** | `/api/qa/10` | POST | 200 | 53046.94 | PASS | RAG_Confidence: 0.88 |
+| **M4: Translation (Hindi)** | `/api/translation/generate/10` | POST | 200 | 39111.35 | PASS | Translation_Len_HI: 456 |
+| **M4: Cached Read (Hindi)** | `/api/translation/10` | GET | 200 | 31.23 | PASS | Cache_Latency_HI_ms: 31.23 |
+| **M4: Translation (Marathi)** | `/api/translation/generate/10` | POST | 200 | 29530.72 | PASS | Translation_Len_MR: 434 |
+| **M4: Cached Read (Marathi)** | `/api/translation/10` | GET | 200 | 11.14 | PASS | Cache_Latency_MR_ms: 11.14 |
+| **Document: Download** | `/api/documents/10/download` | GET | 200 | 15.43 | PASS | Downloaded_Bytes: 17039 |
+| **Report: Plaintext Audit** | `/api/reports/download/10` | GET | 200 | 15.44 | PASS | Report_Char_Length: 6724 |
+| **M9: Document Comparison** | `/api/agreement-comparison` | POST | 200 | 504.12 | PASS | Total_Compared_Clauses: 53 |
+| **M9: Comparison History** | `/api/agreement-comparison/history/9` | GET | 200 | 8.13 | PASS | Comparison_History_Count: 1 |
 
 ---
 
